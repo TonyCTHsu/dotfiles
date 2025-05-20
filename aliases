@@ -15,11 +15,10 @@ alias s="rspec"
 # Pretty print the path
 alias path='echo $PATH | tr -s ":" "\n"'
 
-# Easier navigation: ..., ...., ....., and -
-alias ...="cd ../.."
-alias ....="cd ../../.."
-alias .....="cd ../../../.."
-alias -- -="cd -"
+alias d="docker"
+alias dc="docker compose"
+alias k="kubectl"
+alias pc="podman-compose"
 
 # Include custom aliases
 if [[ -f ~/.aliases.local ]]; then
