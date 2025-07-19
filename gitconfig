@@ -31,6 +31,7 @@
   ff = only
 [commit]
   template = ~/.gitmessage
+	gpgsign = true
 [fetch]
   prune = true
 [rebase]
@@ -42,11 +43,15 @@
 [user]
 	name = Tony Hsu
 	email = tonyc.t.hsu@gmail.com
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF1GXPznqwRRaFOpx6euCAiiiEUs93JC3czqvQq+777v
 [credential]
 	helper = osxkeychain
 [gpg]
-	program = /opt/homebrew/bin/gpg
+	format = ssh
 [includeIf "gitdir:~/datadog/"]
 	path = ~/.gitconfig.datadog
 [pull]
 	ff = only
+[gpg "ssh"]
+	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+	allowedSignersFile = ~/.ssh/allowed_signers
