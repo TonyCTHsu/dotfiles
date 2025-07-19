@@ -34,8 +34,11 @@ _load_settings() {
 }
 _load_settings "$HOME/.zsh/configs"
 
+export PATH="/opt/homebrew/bin:$PATH"
 # Local config
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 
 # aliases
 [[ -f ~/.aliases ]] && source ~/.aliases
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
