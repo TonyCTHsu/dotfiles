@@ -5,8 +5,6 @@
 [init]
 	defaultBranch = main
 	templatedir = ~/.git_template
-[color]
-	ui = auto
 [alias]
 	aa = add --all
 	ap = add --patch
@@ -28,25 +26,45 @@
 	followTags = true
 	autoSetupRemote = true
 [core]
-	excludesfile = ~/.gitignore_global
+	excludesfile = ~/.gitignore
 	autocrlf = input
 [merge]
 	ff = only
+	conflictstyle = zdiff3
 [commit]
 	template = ~/.gitmessage
 	gpgsign = true
+	verbose = true
 [fetch]
 	prune = true
+	pruneTags = true
 [pull]
 	ff = only
 [rebase]
-	autosquash = true
+	autoSquash = true
+	autoStash = true
+	updateRefs = true
 [include]
 	path = ~/.gitconfig.local
 [diff]
-	colorMoved = zebra
+	colorMoved = plain
+	algorithm = histogram
+	moved = true
+	mnemonicPrefix = true
+	renames = true
 [credential]
 	helper = osxkeychain
+[branch]
+	sort = -committerdate
+[tag]
+	sort = -version:refname
+[column]
+	ui = auto
+[help]
+	autocorrect = prompt
+[rerere]
+	enabled = true
+	autoupdate = true
 [gpg]
 	format = ssh
 [gpg "ssh"]
