@@ -1,4 +1,4 @@
-EXCLUDES="*.md LICENSE CODEOWNERS"
+EXCLUDES="*.md LICENSE CODEOWNERS id_* known_hosts* authorized_keys"
 DOTFILES_DIRS="$HOME/dotfiles-local $HOME/dotfiles"
 COPY_ALWAYS="git_template/HEAD"
 UNDOTTED="Brewfile"
