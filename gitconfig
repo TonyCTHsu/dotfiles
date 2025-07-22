@@ -52,8 +52,6 @@
 	moved = true
 	mnemonicPrefix = true
 	renames = true
-[credential]
-	helper = osxkeychain
 [branch]
 	sort = -committerdate
 [tag]
@@ -71,4 +69,6 @@
 	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
 	allowedSignersFile = ~/.ssh/allowed_signers
 [includeIf "gitdir:~/datadog/"]
+	path = ~/.gitconfig.datadog
+[includeIf "gitdir:~/dd/"]
 	path = ~/.gitconfig.datadog
