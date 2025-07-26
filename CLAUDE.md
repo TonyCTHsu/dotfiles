@@ -41,6 +41,26 @@ All configuration changes must be idempotent - safe to run multiple times withou
 - Commands like `rcup` and `brew bundle` are inherently idempotent
 - Avoid operations that fail on subsequent runs (unconditional `eval` statements, etc.)
 
+### Security and Data Protection
+Never commit actual secrets or credentials to the repository:
+- **No private keys**: SSH private keys, GPG private keys, certificates
+- **No API credentials**: GitHub tokens, AWS keys, database passwords
+- **No company secrets**: Internal URLs, proprietary configuration values
+- **Use secure storage**: 1Password, system keychain, or environment variables for secrets
+- **Review commits**: Always check diffs before committing to catch accidental credentials
+
+Note: Public information like names, emails, and SSH public keys are safe to commit.
+
+### Local Override Pattern for Secrets
+```bash
+# For actual secrets only - use environment variables or external tools:
+export GITHUB_TOKEN=$(op read "op://Personal/GitHub/token")
+
+# Or in config files:
+[github]
+  token = ${GITHUB_TOKEN}
+```
+
 ## Architecture and Key Patterns
 
 ### RCM Configuration System
