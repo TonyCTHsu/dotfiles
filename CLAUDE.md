@@ -32,6 +32,15 @@ vim -u ~/.vimrc.bundles +PlugUpdate +PlugClean! +qa
 ### No Build/Test/Lint Commands
 This repository contains configuration files only - no application code to build, test, or lint.
 
+## Design Principles
+
+### Idempotency First
+All configuration changes must be idempotent - safe to run multiple times without side effects:
+- Use conditional checks before tool initialization: `if command -v tool >/dev/null 2>&1; then`
+- Test file existence before sourcing: `[ -f "$file" ] && source "$file"`
+- Commands like `rcup` and `brew bundle` are inherently idempotent
+- Avoid operations that fail on subsequent runs (unconditional `eval` statements, etc.)
+
 ## Architecture and Key Patterns
 
 ### RCM Configuration System
