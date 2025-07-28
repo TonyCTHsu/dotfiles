@@ -103,3 +103,13 @@ All configurations support local overrides in `~/dotfiles-local/` with `.local` 
 - **fzf**: Fuzzy finding integration (checks for brew installation)
 - **Rails/Ruby**: Specialized aliases and configurations
 - **Container tools**: Docker, podman, kubernetes aliases
+- **VS Code**: Use built-in Settings Sync instead of dotfiles management
+
+### VS Code Configuration
+VS Code settings, keybindings, and extensions should be managed using VS Code's built-in Settings Sync feature rather than including them in this dotfiles repository.
+
+#### Setup Instructions
+1. **Enable Settings Sync**: Open Command Palette (`Cmd+Shift+P`) → "Settings Sync: Turn On"
+2. **Sign in**: Use GitHub account
+3. **Configure sync**: Sync all (settings, keybindings, extensions, UI state)
+4. **On new machines**: VS Code will prompt to sync when you sign in
