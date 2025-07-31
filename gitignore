@@ -14,3 +14,10 @@ log/*.log
 rerun.txt
 tmp/**/*
 /tags
+
+# Ignore everything in claude/
+claude/*
+
+# But whitelist the commands directory
+!claude/commands/
+!claude/commands/**
