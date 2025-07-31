@@ -1,4 +1,59 @@
-#!/bin/sh
+#!/bin/bash
+
+# Pre-commit hook to check and fix trailing whitespace
+# This hook will:
+# 1. Check for trailing whitespace in staged files
+# 2. Automatically fix it if found
+# 3. Re-stage the cleaned files
+# 4. Continue with the commit
+
+set -e
+
+echo "🔍 Checking for trailing whitespace..."
+
+# Get list of staged files (only text files we care about)
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(rb|sh|md|txt|yml|yaml|json|js|ts|css|html)$' || true)
+
+if [ -z "$STAGED_FILES" ]; then
+    echo "✅ No relevant files to check"
+else
+    # Check for trailing whitespace
+    WHITESPACE_FILES=()
+    for file in $STAGED_FILES; do
+        if [ -f "$file" ] && grep -qE '[[:space:]]+$' "$file"; then
+            WHITESPACE_FILES+=("$file")
+        fi
+    done
+
+
+    if [ ${#WHITESPACE_FILES[@]} -eq 0 ]; then
+        echo "✅ No trailing whitespace found"
+    else
+        echo "🧹 Found trailing whitespace in ${#WHITESPACE_FILES[@]} file(s):"
+        for file in "${WHITESPACE_FILES[@]}"; do
+            echo "   - $file"
+        done
+
+        echo "🔧 Automatically fixing trailing whitespace..."
+
+        # Fix trailing whitespace
+        for file in "${WHITESPACE_FILES[@]}"; do
+            # Remove trailing whitespace
+            sed -i '' 's/[[:space:]]*$//' "$file"
+
+            # Ensure file ends with newline
+            if [ -s "$file" ] && [ "$(tail -c1 "$file")" != "" ]; then
+                echo "" >> "$file"
+            fi
+            # Re-stage the fixed file
+            git add "$file"
+            echo "   ✅ Fixed: $file"
+        done
+
+        echo "✨ All files cleaned and re-staged"
+        echo "💡 Continuing with commit..."
+    fi
+fi
 
 local_hook="$HOME"/.git_template.local/hooks/pre-commit
 
