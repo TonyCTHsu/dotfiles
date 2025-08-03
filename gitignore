@@ -21,3 +21,8 @@ claude/*
 # But whitelist the commands directory
 !claude/commands/
 !claude/commands/**
+
+# Sensitive SSH/security files
+ssh/id_*
+ssh/known_hosts*
+ssh/authorized_keys
