@@ -12,7 +12,7 @@ set -e
 echo "🔍 Checking for trailing whitespace..."
 
 # Get list of staged files (only text files we care about)
-STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(rb|sh|md|txt|yml|yaml|json|js|ts|css|html)$' || true)
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(rb|go|sh|md|txt|yml|yaml|json|js|ts|css|html)$' || true)
 
 if [ -z "$STAGED_FILES" ]; then
     echo "✅ No relevant files to check"
@@ -53,6 +53,25 @@ else
         echo "✨ All files cleaned and re-staged"
         echo "💡 Continuing with commit..."
     fi
+fi
+
+# Run StandardRB on Ruby files
+echo "🔍 Running StandardRB..."
+RUBY_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep '\.rb$' || true)
+
+if [ -n "$RUBY_FILES" ]; then
+    echo "🔧 Running standardrb --fix on staged Ruby files..."
+    if bundle exec standardrb --fix $RUBY_FILES; then
+        # Re-stage the fixed files
+        git add $RUBY_FILES
+        echo "✅ StandardRB fixes applied and re-staged"
+    else
+        echo "❌ StandardRB found issues that couldn't be auto-fixed"
+        echo "💡 Please fix the remaining issues and commit again"
+        exit 1
+    fi
+else
+    echo "✅ No Ruby files to check"
 fi
 
 local_hook="$HOME"/.git_template.local/hooks/pre-commit
