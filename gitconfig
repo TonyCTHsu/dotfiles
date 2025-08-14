@@ -72,3 +72,5 @@
 	path = ~/.gitconfig.datadog
 [includeIf "gitdir:~/dd/"]
 	path = ~/.gitconfig.datadog
+[includeIf "gitdir:~/go/"]
+	path = ~/.gitconfig.datadog
