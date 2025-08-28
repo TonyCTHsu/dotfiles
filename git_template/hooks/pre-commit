@@ -61,7 +61,7 @@ RUBY_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep '\.rb$' || t
 
 if [ -n "$RUBY_FILES" ]; then
     echo "🔧 Running standardrb --fix on staged Ruby files..."
-    if bundle exec standardrb --fix $RUBY_FILES; then
+    if standardrb --fix $RUBY_FILES; then
         # Re-stage the fixed files
         git add $RUBY_FILES
         echo "✅ StandardRB fixes applied and re-staged"
