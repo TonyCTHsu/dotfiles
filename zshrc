@@ -36,7 +36,6 @@ _load_settings "$HOME/.zsh/configs"
 
 export PATH="/opt/homebrew/bin:$PATH"
 export SSH_AUTH_SOCK="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
-eval "$(direnv hook zsh)"
 
 # Local config
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
