@@ -5,20 +5,16 @@ alias mkdir="mkdir -p"
 alias e="$EDITOR"
 alias v="$VISUAL"
 
-# Bundler
-alias b="bundle"
-
-# Rails
-alias migrate="bin/rails db:migrate db:rollback && bin/rails db:migrate db:test:prepare"
-alias s="rspec"
-
 # Pretty print the path
 alias path='echo $PATH | tr -s ":" "\n"'
 
 alias d="docker"
 alias dc="docker compose"
-alias k="kubectl"
+
+alias p="podman"
 alias pc="podman-compose"
+
+alias k="kubectl"
 
 # Include custom aliases
 if [[ -f ~/.aliases.local ]]; then
