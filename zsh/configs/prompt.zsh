@@ -1,14 +1,12 @@
-# modify the prompt to contain git branch name if applicable
-git_prompt_info() {
-  current_branch=$(git current-branch 2> /dev/null)
-  if [[ -n $current_branch ]]; then
-    echo " %{$fg_bold[green]%}$current_branch%{$reset_color%}"
-  fi
-}
+# Initialize pure prompt: https://github.com/sindresorhus/pure
 
-setopt promptsubst
+if command -v brew >/dev/null 2>&1; then
+  fpath+="$(brew --prefix)/share/zsh/site-functions"
+  autoload -U promptinit; promptinit
 
-# Allow exported PS1 variable to override default prompt.
-if ! env | grep -q '^PS1='; then
-  PS1='${SSH_CONNECTION+"%{$fg_bold[green]%}%n@%m:"}%{$fg_bold[blue]%}%c%{$reset_color%}$(git_prompt_info) %# '
+  PURE_GIT_PULL=0
+
+  zstyle :prompt:pure:git:branch color green
+
+  prompt pure
 fi
