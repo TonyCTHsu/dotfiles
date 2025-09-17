@@ -74,6 +74,29 @@ else
     echo "✅ No Ruby files to check"
 fi
 
+# Run Vale on Markdown files
+echo "🔍 Running Vale linter..."
+MARKDOWN_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep '\.md$' || true)
+
+if [ -n "$MARKDOWN_FILES" ]; then
+    if command -v vale >/dev/null 2>&1; then
+        echo "📝 Checking Markdown files with Vale..."
+        if vale "$MARKDOWN_FILES"; then
+            echo "✅ Vale checks passed"
+        else
+            echo "❌ Vale found style issues in Markdown files"
+            echo "💡 Please review and fix the issues above, then commit again"
+            echo "   You can run 'vale <filename>' to check specific files"
+            exit 1
+        fi
+    else
+        echo "⚠️  Vale not found - skipping Markdown checks"
+        echo "💡 Install with: brew install vale"
+    fi
+else
+    echo "✅ No Markdown files to check"
+fi
+
 local_hook="$HOME"/.git_template.local/hooks/pre-commit
 
 if [ -f "$local_hook" ]; then
