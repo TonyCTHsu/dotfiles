@@ -8,10 +8,7 @@ alias v="$VISUAL"
 # Pretty print the path
 alias path='echo $PATH | tr -s ":" "\n"'
 
-alias d="docker"
 alias dc="docker compose"
-
-alias p="podman"
 alias pc="podman-compose"
 
 alias k="kubectl"

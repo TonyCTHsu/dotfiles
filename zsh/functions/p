@@ -1,0 +1,7 @@
+p() {
+  if [[ $# -gt 0 ]]; then
+    podman "$@"
+  else
+    podman container list --all
+  fi
+}
