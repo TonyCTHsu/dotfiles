@@ -1,6 +1,6 @@
-setopt hist_ignore_all_dups inc_append_history
+setopt hist_ignore_all_dups inc_append_history hist_verify
 HISTFILE=~/.zhistory
-HISTSIZE=4096
-SAVEHIST=4096
+HISTSIZE=50000
+SAVEHIST=50000
 
 export ERL_AFLAGS="-kernel shell_history enabled"
