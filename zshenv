@@ -1,5 +1,8 @@
 local _old_path="$PATH"
 
+# Keep PATH free of duplicates as later configs prepend entries.
+typeset -U path PATH
+
 # Local config
 [[ -f ~/.zshenv.local ]] && source ~/.zshenv.local
 
