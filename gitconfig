@@ -50,7 +50,6 @@
 [diff]
 	colorMoved = plain
 	algorithm = histogram
-	moved = true
 	mnemonicPrefix = true
 	renames = true
 [branch]
