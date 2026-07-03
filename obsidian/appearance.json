@@ -1,0 +1,13 @@
+{
+  "interfaceFontFamily": "JetBrains Mono",
+  "theme": "system",
+  "accentColor": "",
+  "textFontFamily": "JetBrains Mono",
+  "monospaceFontFamily": "JetBrains Mono",
+  "cssTheme": "Minimal",
+  "baseFontSize": 16,
+  "translucency": true,
+  "enabledCssSnippets": [
+    "ghostty-feel"
+  ]
+}
