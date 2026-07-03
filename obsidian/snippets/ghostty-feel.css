@@ -1,0 +1,7 @@
+/* Tighten line height/letter spacing to feel closer to Ghostty's terminal grid */
+.markdown-source-view.mod-cm6,
+.markdown-preview-view {
+  --line-height-normal: 1.5;
+  --line-height-tight: 1.15;
+  letter-spacing: 0;
+}

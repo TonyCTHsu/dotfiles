@@ -120,6 +120,19 @@ Shell aliases and scripts:
 - `tat` to attach to tmux session named the same as the current directory.
 - `v` for `$VISUAL`.
 
+[Obsidian](https://obsidian.md) appearance config (`appearance.json`, `core-plugins.json`,
+`community-plugins.json`, `snippets/`) — not wired into `install.sh` since not every machine
+has the vault. Run manually per machine:
+
+```bash
+bin/link-obsidian [vault_path]  # defaults to $HOME/obsidian
+```
+
+This symlinks those files/directories into the vault's `.obsidian/` folder so appearance
+tweaks stay in sync across machines. Vault content and other `.obsidian/` state
+(`workspace.json`, `plugins/`, etc.) are left untouched. Community themes (e.g. Minimal)
+aren't vendored here — reinstall them per machine via Settings → Appearance → Themes.
+
 ## Credits
 
 Originally based on [thoughtbot dotfiles](https://github.com/thoughtbot/dotfiles) with personal customizations and automation added.
