@@ -4,10 +4,11 @@
 # .obsidian directory, so it stays in sync across machines.
 #
 # Only the appearance-related subset is linked: appearance.json,
-# core-plugins.json, community-plugins.json, snippets/, themes/.
+# core-plugins.json, community-plugins.json, snippets/.
 # Everything else in .obsidian/ (workspace.json, graph.json, app.json,
-# plugins/, .DS_Store) is left untouched - it's machine/session-specific
-# or out of scope.
+# plugins/, themes/, .DS_Store) is left untouched - it's machine/session-specific,
+# out of scope, or (for themes/) a third-party download reinstalled per machine
+# via Obsidian's Settings -> Appearance -> Themes browser instead of vendored here.
 #
 # Usage: bin/link-obsidian [vault_path]
 #   Defaults to $HOME/obsidian
@@ -52,6 +53,6 @@ link_item() {
   echo "linked: $name"
 }
 
-for name in appearance.json core-plugins.json community-plugins.json snippets themes; do
+for name in appearance.json core-plugins.json community-plugins.json snippets; do
   link_item "$name"
 done

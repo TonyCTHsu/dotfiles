@@ -121,8 +121,8 @@ Shell aliases and scripts:
 - `v` for `$VISUAL`.
 
 [Obsidian](https://obsidian.md) appearance config (`appearance.json`, `core-plugins.json`,
-`community-plugins.json`, `snippets/`, `themes/`) — not wired into `install.sh` since not
-every machine has the vault. Run manually per machine:
+`community-plugins.json`, `snippets/`) — not wired into `install.sh` since not every machine
+has the vault. Run manually per machine:
 
 ```bash
 bin/link-obsidian [vault_path]  # defaults to $HOME/obsidian
@@ -130,7 +130,8 @@ bin/link-obsidian [vault_path]  # defaults to $HOME/obsidian
 
 This symlinks those files/directories into the vault's `.obsidian/` folder so appearance
 tweaks stay in sync across machines. Vault content and other `.obsidian/` state
-(`workspace.json`, `plugins/`, etc.) are left untouched.
+(`workspace.json`, `plugins/`, etc.) are left untouched. Community themes (e.g. Minimal)
+aren't vendored here — reinstall them per machine via Settings → Appearance → Themes.
 
 ## Credits
 
