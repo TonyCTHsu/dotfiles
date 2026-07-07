@@ -46,12 +46,12 @@ vim -u ~/.vimrc.bundles +PlugUpdate +PlugClean! +qa
 
 ## Machine-Specific Customizations
 
-For machine-specific settings, you can create local override files that won't be committed:
+For machine-specific shell settings that shouldn't be committed (e.g. company-managed
+environment variables), create `~/.zshrc.local` - it's sourced automatically by
+`dot_zshrc` if present.
 
-- `~/.gitconfig.local` - Git settings specific to this machine
-- `~/.zshrc.local` - Shell customizations for this machine
-- `~/.aliases.local` - Machine-specific aliases
-- `~/.vimrc.local` - Vim settings for this machine
+Git identity is instead handled per-repo-path via `includeIf "gitdir:..."` in
+`dot_gitconfig` - see that file for the pattern.
 
 ## What's in it?
 

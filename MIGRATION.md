@@ -75,10 +75,17 @@ top, so it was left alone.
 ## Why `~/dotfiles-local`-style overrides were retired
 
 rcm's convention was per-machine override files living outside the repo. chezmoi's
-untracked `.local`-suffixed files (`~/.gitconfig.local`, `~/.zshrc.local`,
-`~/.aliases.local`, `~/.vimrc.local`) achieve the same thing more simply — no separate
-directory to remember to check, and each tracked config file already has an
-`include`/source-guard pointing at its `.local` counterpart.
+untracked `.local`-suffixed files achieve the same thing more simply — no separate
+directory to remember to check, and the tracked config file just needs a source-guard
+pointing at its `.local` counterpart.
+
+Only one of these hooks ever had real content on any machine — `~/.zshrc.local`, which
+holds settings a company-managed provisioning tool writes outside the repo (see
+`dot_zshrc`) — so the unused source-guards for `.gitconfig.local`, `.aliases.local`,
+`.vimrc.local`, `.vimrc.bundles.local`, `.zshenv.local`, and `.tmux.conf.local` were
+removed. Git identity in particular never needed this pattern: `dot_gitconfig` already
+handles per-repo-path identity via git's own `includeIf "gitdir:..."`, which is more
+precise than a machine-wide override anyway (see the section above).
 
 ## Migrating another machine
 

@@ -67,7 +67,7 @@ export GITHUB_TOKEN=$(op read "op://Personal/GitHub/token")
 - Source directory (`~/dotfiles`, via `chezmoi init --source`) mirrors `$HOME` with attribute-prefixed names: `dot_foo` → `~/.foo`, `private_dot_ssh` → `~/.ssh` (0700/0600 perms), `symlink_dot_claude` → `~/.claude` as a symlink.
 - `.chezmoiignore` excludes source-only helper directories (`claude`, `obsidian`) from being applied as their own targets — they're only reachable via symlink target or an explicit script (`link-obsidian`), not by name.
 - Files like `Brewfile` have no `dot_` prefix, so they're managed as source-repo files rather than symlinked into `$HOME`.
-- Per-machine/per-repo overrides use plain, untracked `~/.gitconfig.local`, `~/.zshrc.local`, `~/.aliases.local` files (referenced via `include`/`includeIf` in the tracked configs) — chezmoi doesn't manage these, so this pattern is unchanged from before.
+- Per-machine shell overrides use a plain, untracked `~/.zshrc.local` (sourced by `dot_zshrc`) — chezmoi doesn't manage it, so this pattern is unchanged from before. Git identity instead uses git's own `includeIf "gitdir:..."` in `dot_gitconfig`, scoped per repo path rather than per machine.
 - One-time or content-triggered setup steps live in `run_once_*`/`run_onchange_*` scripts (e.g. vim-plug install, `PlugUpdate` on `dot_vimrc.bundles` changes), replacing the old `hooks/post-up` script.
 - See [MIGRATION.md](MIGRATION.md) for the full rationale behind this structure (why `private_` needs to be on individual files, why scripts have `|| true`, why `hooks/post-up` split into three scripts, etc.), and [SETUP.md](SETUP.md#migrating-an-existing-machine-from-rcm) for migrating a machine still running the old `rcm` setup.
 
@@ -88,7 +88,6 @@ export GITHUB_TOKEN=$(op read "op://Personal/GitHub/token")
 - `dot_vimrc.bundles`: Plugin definitions using vim-plug
 - `dot_vimrc`: Main vim configuration
 - `dot_vim/`: Additional vim configs (ftplugin, plugin directories)
-- Local overrides supported via `~/.vimrc.local` and `~/.vimrc.bundles.local`
 
 ### Key Scripts and Utilities
 - `run_once_*`/`run_onchange_*` scripts: Run on `chezmoi apply`, handle vim plugin updates and system checks
@@ -96,10 +95,8 @@ export GITHUB_TOKEN=$(op read "op://Personal/GitHub/token")
 - `dot_aliases`: Shell aliases for common development tasks
 
 ### Local Customization Pattern
-All configurations support local overrides via plain, untracked `.local`-suffixed files created directly at `$HOME` (no separate override repo needed):
-- `~/.gitconfig.local`, `~/.zshrc.local`, `~/.vimrc.local`, etc.
-- Referenced via `include`/`includeIf` (gitconfig) or `[[ -f ... ]] && source` guards (zsh), so chezmoi never manages or overwrites them
-- Allows personal customization without modifying the main dotfiles
+- Shell customization that shouldn't be committed goes in `~/.zshrc.local`, a plain untracked file sourced by `dot_zshrc` via a `[[ -f ... ]] && source` guard — chezmoi never manages or overwrites it
+- Git identity is instead scoped per repo path via `includeIf "gitdir:..."` in `dot_gitconfig`, not a machine-wide `.local` file
 
 ### Development Tool Integration
 - **Homebrew**: Package management via `Brewfile`

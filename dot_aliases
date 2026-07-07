@@ -12,8 +12,3 @@ alias dc="docker compose"
 alias pc="podman-compose"
 
 alias k="kubectl"
-
-# Include custom aliases
-if [[ -f ~/.aliases.local ]]; then
-  source ~/.aliases.local
-fi
