@@ -13,12 +13,16 @@ git clone https://github.com/TonyCTHsu/dotfiles ~/dotfiles && ~/dotfiles/install
 The install script will:
 - Install Homebrew (if needed)
 - Install all dependencies from Brewfile
-- Set up dotfiles with rcm
+- Set up dotfiles with chezmoi
 - Configure zsh as default shell
 
 ## Manual Install
 
 If you prefer manual control, see [SETUP.md](SETUP.md) for detailed instructions.
+
+Migrating a machine still running the old `rcm`-based setup? See
+[SETUP.md](SETUP.md#migrating-an-existing-machine-from-rcm). For the structure and
+rationale behind the current chezmoi layout, see [MIGRATION.md](MIGRATION.md).
 
 ## Requirements
 
@@ -31,7 +35,7 @@ After making changes to your dotfiles:
 
 ```bash
 # Re-apply dotfiles
-rcup
+chezmoi apply
 
 # Install new packages (if Brewfile changed)
 brew bundle
@@ -125,7 +129,7 @@ Shell aliases and scripts:
 has the vault. Run manually per machine:
 
 ```bash
-bin/link-obsidian [vault_path]  # defaults to $HOME/obsidian
+link-obsidian [vault_path]  # defaults to $HOME/obsidian
 ```
 
 This symlinks those files/directories into the vault's `.obsidian/` folder so appearance

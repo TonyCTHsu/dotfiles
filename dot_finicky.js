@@ -1,7 +1,7 @@
 export default {
   defaultBrowser: {
     name: "Google Chrome",
-    profile: "Tony"
+    profile: "datadoghq.com"
   },
   handlers: [
     {

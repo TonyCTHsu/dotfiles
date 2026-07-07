@@ -4,20 +4,20 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-This is a thoughtbot-style dotfiles repository for macOS development environment setup. It uses `rcm` (RCM) for managing dotfiles via symlinks and includes configurations for zsh, vim, git, tmux, and various development tools.
+This is a thoughtbot-style dotfiles repository for macOS development environment setup. It uses `chezmoi` for managing dotfiles via a templated source directory and includes configurations for zsh, vim, git, tmux, and various development tools.
 
 ## Installation and Management Commands
 
 ### Initial Setup
 ```bash
 # Install dependencies
-brew install rcm
+brew install chezmoi
 
-# Install dotfiles (first time)
-env RCRC=$HOME/dotfiles/rcrc rcup
+# Install dotfiles (first time), treating this checkout as the source dir
+chezmoi init --apply --source=$HOME/dotfiles
 
 # Update dotfiles (subsequent runs)
-rcup
+chezmoi apply
 ```
 
 ### Package Management
@@ -38,7 +38,7 @@ This repository contains configuration files only - no application code to build
 All configuration changes must be idempotent - safe to run multiple times without side effects:
 - Use conditional checks before tool initialization: `if command -v tool >/dev/null 2>&1; then`
 - Test file existence before sourcing: `[ -f "$file" ] && source "$file"`
-- Commands like `rcup` and `brew bundle` are inherently idempotent
+- Commands like `chezmoi apply` and `brew bundle` are inherently idempotent
 - Avoid operations that fail on subsequent runs (unconditional `eval` statements, etc.)
 
 ### Security and Data Protection
@@ -63,38 +63,42 @@ export GITHUB_TOKEN=$(op read "op://Personal/GitHub/token")
 
 ## Architecture and Key Patterns
 
-### RCM Configuration System
-- `rcrc`: Defines rcm behavior, excludes documentation files, enables local overrides
-- `DOTFILES_DIRS`: Supports both main dotfiles and local overrides in `~/dotfiles-local`
-- `UNDOTTED`: Files like `Brewfile` are symlinked without dot prefix
+### chezmoi Configuration System
+- Source directory (`~/dotfiles`, via `chezmoi init --source`) mirrors `$HOME` with attribute-prefixed names: `dot_foo` → `~/.foo`, `private_dot_ssh` → `~/.ssh` (0700/0600 perms), `symlink_dot_claude` → `~/.claude` as a symlink.
+- `.chezmoiignore` excludes source-only helper directories (`claude`, `obsidian`) from being applied as their own targets — they're only reachable via symlink target or an explicit script (`link-obsidian`), not by name.
+- Files like `Brewfile` have no `dot_` prefix, so they're managed as source-repo files rather than symlinked into `$HOME`.
+- Per-machine/per-repo overrides use plain, untracked `~/.gitconfig.local`, `~/.zshrc.local`, `~/.aliases.local` files (referenced via `include`/`includeIf` in the tracked configs) — chezmoi doesn't manage these, so this pattern is unchanged from before.
+- One-time or content-triggered setup steps live in `run_once_*`/`run_onchange_*` scripts (e.g. vim-plug install, `PlugUpdate` on `dot_vimrc.bundles` changes), replacing the old `hooks/post-up` script.
+- See [MIGRATION.md](MIGRATION.md) for the full rationale behind this structure (why `private_` needs to be on individual files, why scripts have `|| true`, why `hooks/post-up` split into three scripts, etc.), and [SETUP.md](SETUP.md#migrating-an-existing-machine-from-rcm) for migrating a machine still running the old `rcm` setup.
 
 ### Zsh Configuration Structure
-- `zsh/configs/`: Modular configuration system
-  - `zsh/configs/post/`: Files loaded last
-  - `zsh/configs/plugins.zsh`: Loads brew-installed zsh plugins
-- `zshrc`: Main entry point that sources all configs
-- `zshenv`, `zprofile`: Environment and profile setup
+- `dot_zsh/configs/`: Modular configuration system
+  - `dot_zsh/configs/post/`: Files loaded last
+  - `dot_zsh/configs/plugins.zsh`: Loads brew-installed zsh plugins
+- `dot_zshrc`: Main entry point that sources all configs
+- `dot_zshenv`, `dot_zprofile`: Environment and profile setup
 
 ### Git Configuration Pattern
-- `gitconfig`: Main git configuration with thoughtbot conventions
-- `git_template/hooks/`: Git hooks for ctags integration
-- `bin/git-*`: Custom git subcommands (create-branch, delete-branch, etc.)
+- `dot_gitconfig`: Main git configuration with thoughtbot conventions
+- `dot_git_template/hooks/`: Git hooks for ctags integration
+- `dot_bin/git-*`: Custom git subcommands (create-branch, delete-branch, etc.)
 - SSH signing with 1Password integration
 
 ### Vim Configuration System
-- `vimrc.bundles`: Plugin definitions using vim-plug
-- `vimrc`: Main vim configuration
-- `vim/`: Additional vim configs (ftplugin, plugin directories)
+- `dot_vimrc.bundles`: Plugin definitions using vim-plug
+- `dot_vimrc`: Main vim configuration
+- `dot_vim/`: Additional vim configs (ftplugin, plugin directories)
 - Local overrides supported via `~/.vimrc.local` and `~/.vimrc.bundles.local`
 
 ### Key Scripts and Utilities
-- `hooks/post-up`: Runs after rcup, handles vim plugin updates and system checks
-- `bin/` directory: Contains various development utilities (tat, replace, etc.)
-- `aliases`: Shell aliases for common development tasks
+- `run_once_*`/`run_onchange_*` scripts: Run on `chezmoi apply`, handle vim plugin updates and system checks
+- `dot_bin/` directory: Contains various development utilities (tat, replace, etc.)
+- `dot_aliases`: Shell aliases for common development tasks
 
 ### Local Customization Pattern
-All configurations support local overrides in `~/dotfiles-local/` with `.local` suffix:
-- `gitconfig.local`, `zshrc.local`, `vimrc.local`, etc.
+All configurations support local overrides via plain, untracked `.local`-suffixed files created directly at `$HOME` (no separate override repo needed):
+- `~/.gitconfig.local`, `~/.zshrc.local`, `~/.vimrc.local`, etc.
+- Referenced via `include`/`includeIf` (gitconfig) or `[[ -f ... ]] && source` guards (zsh), so chezmoi never manages or overwrites them
 - Allows personal customization without modifying the main dotfiles
 
 ### Development Tool Integration

@@ -10,12 +10,12 @@
 # out of scope, or (for themes/) a third-party download reinstalled per machine
 # via Obsidian's Settings -> Appearance -> Themes browser instead of vendored here.
 #
-# Usage: bin/link-obsidian [vault_path]
+# Usage: link-obsidian [vault_path]
 #   Defaults to $HOME/obsidian
 
 set -e
 
-DOTFILES_OBSIDIAN="$HOME/dotfiles/obsidian"
+DOTFILES_OBSIDIAN="$(chezmoi source-path)/obsidian"
 VAULT_PATH="${1:-$HOME/obsidian}"
 OBSIDIAN_DIR="$VAULT_PATH/.obsidian"
 

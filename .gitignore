@@ -1,2 +1,11 @@
-!bin
-vim/bundle/
+.DS_Store
+
+!dot_bin
+dot_vim/bundle/
+
+# claude/ is a chezmoi symlink_ target (~/.claude); only track spec.md,
+# everything else is untracked runtime state (caches, logs, sessions, etc.)
+claude/*
+!claude/commands
+claude/commands/*
+!claude/commands/spec.md

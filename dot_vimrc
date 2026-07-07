@@ -50,7 +50,7 @@ augroup vimrcEx
   autocmd BufRead,BufNewFile
     \ aliases.local,
     \zshenv.local,zlogin.local,zlogout.local,zshrc.local,zprofile.local,
-    \*/zsh/configs/*
+    \*/dot_zsh/configs/*
     \ set filetype=sh
   autocmd BufRead,BufNewFile gitconfig.local set filetype=gitconfig
   autocmd BufRead,BufNewFile tmux.conf.local set filetype=tmux
@@ -161,7 +161,7 @@ nnoremap [r :ALEPreviousWrap<CR>
 nnoremap <c-p> :Files<cr>
 
 " Set spellfile to location that is guaranteed to exist, can be symlinked to
-" Dropbox or kept in Git and managed outside of thoughtbot/dotfiles using rcm.
+" Dropbox or kept in Git and managed outside of thoughtbot/dotfiles.
 set spellfile=$HOME/.vim-spell-en.utf-8.add
 
 " Autocomplete with dictionary words when spell check is on

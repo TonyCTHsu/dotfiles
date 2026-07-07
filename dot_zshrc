@@ -50,3 +50,6 @@ export SSH_AUTH_SOCK="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/
 [[ -f ~/.aliases ]] && source ~/.aliases
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Trajectory - AI coding agent observability
+export PATH="/Users/tony.hsu/.trajectory/bin:$PATH"

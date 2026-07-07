@@ -1,0 +1,8 @@
+claude
+obsidian
+
+# repo-only files, never deployed into $HOME (mirrors rcm's old
+# EXCLUDES="*.md LICENSE CODEOWNERS")
+*.md
+LICENSE
+install.sh

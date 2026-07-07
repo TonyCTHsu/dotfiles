@@ -38,26 +38,26 @@ print_info "Starting dotfiles installation for macOS..."
 if ! command -v brew >/dev/null 2>&1; then
     print_info "Installing Homebrew..."
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    
+
     # Add Homebrew to PATH for the rest of this script
     if [[ -d "/opt/homebrew" ]]; then
         eval "$(/opt/homebrew/bin/brew shellenv)"
     elif [[ -d "/usr/local/Homebrew" ]]; then
         eval "$(/usr/local/bin/brew shellenv)"
     fi
-    
+
     print_success "Homebrew installed successfully"
 else
     print_info "Homebrew already installed"
 fi
 
-# Install rcm first (needed for dotfiles installation)
-if ! command -v rcup >/dev/null 2>&1; then
-    print_info "Installing rcm..."
-    brew install rcm
-    print_success "rcm installed successfully"
+# Install chezmoi first (needed for dotfiles installation)
+if ! command -v chezmoi >/dev/null 2>&1; then
+    print_info "Installing chezmoi..."
+    brew install chezmoi
+    print_success "chezmoi installed successfully"
 else
-    print_info "rcm already installed"
+    print_info "chezmoi already installed"
 fi
 
 # Install all dependencies from Brewfile
@@ -68,9 +68,17 @@ else
     print_warning "Some dependencies may have failed to install. Continuing..."
 fi
 
-# Install dotfiles using rcm
+# Point chezmoi at this checkout as its source dir. --source only affects this
+# one invocation and is not persisted, so write it to chezmoi.toml directly --
+# otherwise every later plain `chezmoi apply` falls back to the default source
+# dir (~/.local/share/chezmoi) and fails outright.
 print_info "Installing dotfiles..."
-if env RCRC="$HOME/dotfiles/rcrc" rcup; then
+mkdir -p "$HOME/.config/chezmoi"
+cat > "$HOME/.config/chezmoi/chezmoi.toml" <<EOF
+sourceDir = "$HOME/dotfiles"
+EOF
+
+if chezmoi apply -v; then
     print_success "Dotfiles installed successfully"
 else
     print_error "Failed to install dotfiles"
@@ -103,5 +111,5 @@ print_success "Dotfiles installation complete!"
 print_info "Next steps:"
 echo "  1. Restart your terminal or run 'exec zsh'"
 echo "  2. Configure 1Password SSH agent if not already done"
-echo "  3. Run 'rcup' anytime you update your dotfiles"
+echo "  3. Run 'chezmoi apply' anytime you update your dotfiles"
 echo "  4. Run 'brew bundle' to install new packages added to Brewfile"
