@@ -3,9 +3,14 @@
 !dot_bin
 dot_vim/bundle/
 
-# claude/ is a chezmoi symlink_ target (~/.claude); only track spec.md,
-# everything else is untracked runtime state (caches, logs, sessions, etc.)
+# claude/ is a chezmoi symlink_ target (~/.claude); only track the authored
+# toolkit pieces below, everything else is untracked runtime state (caches,
+# logs, sessions, plugins, telemetry, etc.)
 claude/*
+!claude/CLAUDE.md
+!claude/settings.template.json
 !claude/commands
-claude/commands/*
-!claude/commands/spec.md
+!claude/skills
+claude/skills/codebase-memory
+!claude/agents
+!claude/output-styles
