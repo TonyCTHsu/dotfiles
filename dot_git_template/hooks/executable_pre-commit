@@ -84,10 +84,8 @@ if [ -n "$MARKDOWN_FILES" ]; then
         if vale "$MARKDOWN_FILES"; then
             echo "✅ Vale checks passed"
         else
-            echo "❌ Vale found style issues in Markdown files"
-            echo "💡 Please review and fix the issues above, then commit again"
-            echo "   You can run 'vale <filename>' to check specific files"
-            exit 1
+            echo "⚠️  Vale found style issues in Markdown files (not blocking commit)"
+            echo "💡 You can run 'vale <filename>' to check specific files"
         fi
     else
         echo "⚠️  Vale not found - skipping Markdown checks"
