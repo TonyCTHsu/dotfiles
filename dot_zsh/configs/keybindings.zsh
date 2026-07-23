@@ -1,2 +1,2 @@
 # give us access to ^Q
-stty -ixon
+[[ -t 0 ]] && stty -ixon
