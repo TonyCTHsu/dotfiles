@@ -42,15 +42,30 @@ if [ -n "$STAGED_FILES" ]; then
 fi
 
 # Run StandardRB on Ruby files
+# When the repo has its own standard config, run `standardrb --fix` WITHOUT file
+# arguments: passing explicit paths bypasses the repo's ignore list
+# (.standard_todo.yml), which reformats files the project deliberately keeps
+# out of standard. When there is no config, fall back to staged files only.
 RUBY_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep '\.rb$' || true)
 
 if [ -n "$RUBY_FILES" ]; then
-    if standardrb --fix $RUBY_FILES; then
-        # Re-stage the fixed files
-        git add $RUBY_FILES
+    if ! command -v standardrb >/dev/null 2>&1; then
+        echo "standardrb not installed; skipping style fix"
+    elif [ -f .standard.yml ] || [ -f .standard_todo.yml ]; then
+        if standardrb --fix; then
+            # Re-stage the fixed files
+            git add $RUBY_FILES
+        else
+            echo "StandardRB found issues that couldn't be auto-fixed"
+            exit 1
+        fi
     else
-        echo "StandardRB found issues that couldn't be auto-fixed"
-        exit 1
+        if standardrb --fix $RUBY_FILES; then
+            git add $RUBY_FILES
+        else
+            echo "StandardRB found issues that couldn't be auto-fixed"
+            exit 1
+        fi
     fi
 fi
 
