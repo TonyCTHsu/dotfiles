@@ -41,54 +41,6 @@ if [ -n "$STAGED_FILES" ]; then
     fi
 fi
 
-# Run StandardRB on Ruby files
-# When the repo has its own standard config, run `standardrb --fix` WITHOUT file
-# arguments: passing explicit paths bypasses the repo's ignore list
-# (.standard_todo.yml), which reformats files the project deliberately keeps
-# out of standard. When there is no config, fall back to staged files only.
-RUBY_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep '\.rb$' || true)
-
-if [ -n "$RUBY_FILES" ]; then
-    if ! command -v standardrb >/dev/null 2>&1; then
-        echo "standardrb not installed; skipping style fix"
-    elif [ -f .standard.yml ] || [ -f .standard_todo.yml ]; then
-        if standardrb --fix; then
-            # Re-stage the fixed files
-            git add $RUBY_FILES
-        else
-            echo "StandardRB found issues that couldn't be auto-fixed"
-            exit 1
-        fi
-    else
-        if standardrb --fix $RUBY_FILES; then
-            git add $RUBY_FILES
-        else
-            echo "StandardRB found issues that couldn't be auto-fixed"
-            exit 1
-        fi
-    fi
-fi
-
-# Run Vale on Markdown files
-# echo "🔍 Running Vale linter..."
-# MARKDOWN_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep '\.md$' || true)
-#
-# if [ -n "$MARKDOWN_FILES" ]; then
-#     if command -v vale >/dev/null 2>&1; then
-#         echo "📝 Checking Markdown files with Vale..."
-#         if vale "$MARKDOWN_FILES"; then
-#             echo "✅ Vale checks passed"
-#         else
-#             echo "⚠️  Vale found style issues in Markdown files (not blocking commit)"
-#             echo "💡 You can run 'vale <filename>' to check specific files"
-#         fi
-#     else
-#         echo "⚠️  Vale not found - skipping Markdown checks"
-#         echo "💡 Install with: brew install vale"
-#     fi
-# else
-#     echo "✅ No Markdown files to check"
-# fi
 
 local_hook="$HOME"/.git_template.local/hooks/pre-commit
 
