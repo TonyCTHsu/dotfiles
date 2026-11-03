@@ -1,0 +1,9 @@
+# ddoghq namespace: tony-hsu_ddog GitHub account
+[user]
+	name = Tony Hsu
+	email = tony.hsu@datadoghq.com
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIWe/sM7J9Rlr+W20ICMwnLvbWYIaMOZY7Ib10KQ+X3J
+[commit]
+	gpgsign = true
+[gpg]
+	format = ssh

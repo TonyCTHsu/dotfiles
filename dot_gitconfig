@@ -64,7 +64,7 @@
 [gpg]
 	format = ssh
 [gpg "ssh"]
-	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+	program = ssh-keygen
 	allowedSignersFile = ~/.ssh/allowed_signers
 [includeIf "gitdir:~/datadog/"]
 	path = ~/.gitconfig.datadog
@@ -72,3 +72,5 @@
 	path = ~/.gitconfig.datadog
 [includeIf "gitdir:~/go/"]
 	path = ~/.gitconfig.datadog
+[includeIf "gitdir:~/ddoghq/"]
+	path = ~/.gitconfig.ddoghq

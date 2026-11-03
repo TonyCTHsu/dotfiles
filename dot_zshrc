@@ -41,8 +41,6 @@ _load_settings() {
 }
 _load_settings "$HOME/.zsh/configs"
 
-export SSH_AUTH_SOCK="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
-
 # Local config
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 
@@ -53,3 +51,14 @@ export SSH_AUTH_SOCK="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/
 
 # Trajectory - AI coding agent observability
 export PATH="/Users/tony.hsu/.trajectory/bin:$PATH"
+
+# >>> shadowfax >>>
+[ -f /opt/shadowfax/shell ] && . /opt/shadowfax/shell
+# <<< shadowfax <<<
+
+# dogbrew shell-hooks: if you don't want this to be called, comment it out and dogbrew will honour that on subsequent updates.  See also the more dangerous `dogbrew self setup --disable-shell-hooks`.
+[ -f "/opt/dogbrew/share/etc/dogbrew/init.zsh" ] && . "/opt/dogbrew/share/etc/dogbrew/init.zsh"
+export PATH="$HOME/bin:$PATH"
+
+# direnv: per-directory env (ddoghq uses this for GH_TOKEN)
+eval "$(direnv hook zsh)"

@@ -1,8 +1,19 @@
+# Must precede the datadog include: first value wins, so our 24h
+# connection-sharing overrides git-config-tool's ControlPersist 600
+Host github.com ddoghq.github.com
+  ControlPersist 86400
+
+Include /Users/tony.hsu/.config/datadog/git/ssh_config
 Include ~/.colima/ssh_config
 
 Host github.com
   HostName github.com
   User git
 
-Host *
+# Cert-based GitHub transport keys stay in 1Password's agent
+Host github.com ddoghq.github.com
   IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+
+Host *
+  UseKeychain yes
+  AddKeysToKeychain yes
