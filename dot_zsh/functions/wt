@@ -1,0 +1,14 @@
+# wt <name>: reuse or create .worktrees/<name>, then start a briefed pi session there.
+# Expects .worktrees/<name>/BRIEF.md to exist (written by the /handoff prompt).
+wt() {
+  local name="$1" root
+  [[ -n "$name" ]] || { echo "usage: wt <branch-name>" >&2; return 1 }
+  root=$(git rev-parse --show-toplevel) || return 1
+  cd "$root" || return 1
+  if ! git worktree list | grep -q "/.worktrees/$name "; then
+    git worktree add ".worktrees/$name" -b "tonyc.t.hsu/$name" \
+      || git worktree add ".worktrees/$name" "tonyc.t.hsu/$name" || return 1
+  fi
+  cd ".worktrees/$name" || return 1
+  pi . --name "$name" "Read BRIEF.md at the repo root and continue the work it describes."
+}

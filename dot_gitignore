@@ -28,3 +28,5 @@ ssh/known_hosts*
 ssh/authorized_keys
 
 **/.claude/settings.local.json
+# pi agent worktrees
+.worktrees/
