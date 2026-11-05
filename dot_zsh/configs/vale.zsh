@@ -1,2 +1,0 @@
-# VALE_STYLES_PATH
-export VALE_CONFIG_PATH=$HOME/.vale.init
