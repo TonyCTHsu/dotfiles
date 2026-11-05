@@ -1,9 +1,0 @@
-# datadog namespace: TonyCTHsu GitHub account, Datadog org repos
-[user]
-	name = Tony Hsu
-	email = tony.hsu@datadoghq.com
-	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIILLc20aG9KEzIqUSS5BvUFYMmLe/L2VZnUP/taYATbS
-[commit]
-	gpgsign = true
-[gpg]
-	format = ssh
