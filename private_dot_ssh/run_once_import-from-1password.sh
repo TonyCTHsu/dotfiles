@@ -1,7 +1,8 @@
 #!/bin/bash
-# Copy SSH signing keys from 1Password into passphrase-encrypted local files
-# and load them into the macOS keychain ssh-agent. 1Password keeps the
-# master copies. Nothing there is modified or deleted.
+# Copy the personal SSH signing key from 1Password into a
+# passphrase-encrypted local file and load it into the macOS
+# keychain ssh-agent. 1Password keeps the master copy. Nothing
+# there is modified or deleted.
 set -euo pipefail
 
 SSH_DIR="$HOME/.ssh"
@@ -49,11 +50,7 @@ PY
 }
 
 fetch "GitHub Signing Key"       my.1password.com      id_github_signing
-fetch "datadog-signing"          datadog.1password.com id_datadog_signing
-fetch "datadog-signing-ddoghq"   datadog.1password.com id_datadog_signing_ddoghq
 
 echo
 echo "Local copies:"
 ssh-keygen -lf "$SSH_DIR/id_github_signing"
-ssh-keygen -lf "$SSH_DIR/id_datadog_signing"
-ssh-keygen -lf "$SSH_DIR/id_datadog_signing_ddoghq"
