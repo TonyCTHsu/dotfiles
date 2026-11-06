@@ -74,3 +74,10 @@
 	path = ~/.gitconfig.datadog
 [includeIf "gitdir:~/ddoghq/"]
 	path = ~/.gitconfig.ddoghq
+
+# git-config-tool managed config: insteadOf rewrites, per-org identity.
+# ponytail: absolute home path — git-config-tool's doctor string-matches
+# this line; make this a .tmpl with {{ .chezmoi.homeDir }} if you ever use a
+# machine where $HOME differs.
+[include]
+	path = /Users/tony.hsu/.config/datadog/git/config
