@@ -6,3 +6,13 @@ obsidian
 *.md
 LICENSE
 install.sh
+
+# macOS-only: never applied on Linux/Omarchy
+{{ if eq .chezmoi.os "linux" }}
+Brewfile
+dot_finicky.js
+dot_0x96f.itermcolors
+run_onchange_load-personal-signing-key.sh
+{{ else if eq .chezmoi.os "darwin" }}
+run_onchange_install-arch-packages.sh
+{{ end }}

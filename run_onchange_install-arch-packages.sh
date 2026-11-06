@@ -1,0 +1,24 @@
+#!/bin/sh
+# Arch/Omarchy package install. Trim these lists freely. Editing them
+# re-runs the script, because chezmoi hashes the contents. macOS uses the
+# Brewfile instead and never sees this script, since .chezmoiignore gates it.
+# ponytail: omarchy pkg add when present, otherwise plain pacman/paru. No
+# per-package error handling. If a package does not resolve, delete its name.
+
+command -v pacman >/dev/null 2>&1 || exit 0
+
+repo="tmux neovim git gh glab fzf jq yamllint shellcheck actionlint pre-commit
+direnv tree htop btop fastfetch tlrc vale uv chezmoi make sqlite
+docker docker-buildx docker-compose podman podman-compose
+k9s kubectx kubernetes-cli helm minikube crane dive lazydocker
+pyenv rbenv zsh zsh-autosuggestions zsh-syntax-highlighting"
+
+aur="1password google-chrome visual-studio-code obsidian slack spotify"
+
+if command -v omarchy >/dev/null 2>&1; then
+  omarchy pkg add $repo
+  omarchy pkg aur add $aur
+else
+  sudo pacman -S --needed $repo
+  command -v paru >/dev/null 2>&1 && paru -S --needed $aur
+fi

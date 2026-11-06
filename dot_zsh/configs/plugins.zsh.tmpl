@@ -1,0 +1,8 @@
+{{ if eq .chezmoi.os "darwin" -}}
+source $HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+{{ else -}}
+# Arch/Omarchy: plugins installed via pacman into /usr/share/zsh/plugins
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+{{ end -}}
