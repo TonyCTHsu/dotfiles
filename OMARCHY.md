@@ -63,7 +63,15 @@ chezmoi apply --dry-run
 **Step 4. Sign into the 1Password app.**
 
 The import script calls the `op` CLI, which needs an
-authenticated account.
+authenticated account. In the app, turn on these settings:
+
+- Settings > Security > "Unlock using system authentication"
+- Settings > Developer > "Integrate with 1Password CLI"
+- Settings > General > "Keep 1Password in the system tray"
+
+The apply checks all of this before importing anything. If the
+check fails, it prints the missing step. Fix it and re-run
+`chezmoi apply`.
 
 **Step 5. Apply.**
 
