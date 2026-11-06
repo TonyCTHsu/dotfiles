@@ -4,6 +4,7 @@
 # Brewfile instead and never sees this script, since .chezmoiignore gates it.
 # ponytail: omarchy pkg add when present, otherwise plain pacman/paru. No
 # per-package error handling. If a package does not resolve, delete its name.
+set -e
 
 command -v pacman >/dev/null 2>&1 || exit 0
 
