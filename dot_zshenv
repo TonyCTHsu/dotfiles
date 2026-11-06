@@ -1,2 +1,8 @@
 # Keep PATH free of duplicates as later configs prepend entries.
 typeset -U path PATH
+
+# Linux: point at the systemd user ssh-agent socket unless an agent is
+# already set (1Password or otherwise).
+if [[ "$(uname)" == "Linux" ]] && [[ -z "$SSH_AUTH_SOCK" ]]; then
+  export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.sock"
+fi
