@@ -2,65 +2,41 @@
 
 ## First-time setup
 
-**1. Clone and install prerequisites**
+**1. Run the installer**
 
 ```bash
 git clone -b tonyc.t.hsu/omarchy git@github.com:TonyCTHsu/dotfiles.git ~/dotfiles
-omarchy pkg add chezmoi vim
+~/dotfiles/install.sh
 ```
 
 Existing clone:
 
 ```bash
-cd ~/dotfiles && git fetch && git checkout tonyc.t.hsu/omarchy
+cd ~/dotfiles && git fetch && git checkout tonyc.t.hsu/omarchy && ./install.sh
 ```
 
-**2. Configure the chezmoi source**
+The first run installs all packages, then stops at the 1Password
+check and prints the missing steps.
 
-```bash
-mkdir -p ~/.config/chezmoi
-cat > ~/.config/chezmoi/chezmoi.toml <<'EOF'
-sourceDir = "$HOME/dotfiles"
-EOF
-```
+**2. Set up the 1Password app**
 
-**3. Dry-run**
-
-```bash
-chezmoi apply --dry-run
-```
-
-**4. Set up the 1Password app**
-
-Sign in, then enable:
+Open the 1Password app, sign in, and enable:
 
 - Settings > Security > "Unlock using system authentication"
 - Settings > Developer > "Integrate with 1Password CLI"
 - Settings > General > "Keep 1Password in the system tray"
 
-**5. Apply**
+**3. Run the installer again**
 
 ```bash
-chezmoi apply -v
+~/dotfiles/install.sh
 ```
 
-**6. Set the Omarchy defaults**
+The second run imports the signing key, applies all dotfiles, and
+sets the Omarchy defaults (ghostty terminal, chrome browser, vscode
+editor).
 
-```bash
-omarchy default terminal ghostty
-omarchy default browser chrome
-omarchy default editor code
-```
-
-**7. Set the terminal shell**
-
-```bash
-mkdir -p ~/.config/ghostty
-grep -q '^command' ~/.config/ghostty/config 2>/dev/null || \
-  printf 'command = /usr/bin/zsh\n' >> ~/.config/ghostty/config
-```
-
-**8. Verify**
+**4. Verify**
 
 ```bash
 cd ~/dotfiles
