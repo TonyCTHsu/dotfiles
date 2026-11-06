@@ -7,13 +7,14 @@ obsidian
 LICENSE
 install.sh
 
-# macOS-only: never applied on Linux/Omarchy
+# macOS-only: never applied on Linux/Omarchy. Entries are TARGET
+# names: chezmoi strips run_*/dot_* source prefixes when matching.
 {{ if eq .chezmoi.os "linux" }}
 Brewfile
-dot_finicky.js
-dot_0x96f.itermcolors
-run_onchange_load-personal-signing-key.sh
+.finicky.js
+.0x96f.itermcolors
+load-personal-signing-key.sh
 {{ else if eq .chezmoi.os "darwin" }}
-run_before_zz-check-1password.sh
-run_onchange_before_install-arch-packages.sh
+zz-check-1password.sh
+install-arch-packages.sh
 {{ end }}
