@@ -11,9 +11,9 @@ repo="tmux neovim git gh glab fzf jq yamllint shellcheck actionlint pre-commit
 direnv tree htop btop fastfetch tlrc vale uv chezmoi make sqlite
 docker docker-buildx docker-compose podman podman-compose
 k9s kubectx kubernetes-cli helm minikube crane dive lazydocker
-pyenv rbenv zsh zsh-autosuggestions zsh-syntax-highlighting"
+pyenv rbenv zsh zsh-autosuggestions zsh-syntax-highlighting python-cryptography obsidian"
 
-aur="1password google-chrome visual-studio-code obsidian slack spotify"
+aur="1password 1password-cli google-chrome visual-studio-code-bin slack spotify"
 
 if command -v omarchy >/dev/null 2>&1; then
   omarchy pkg add $repo
