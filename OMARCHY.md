@@ -44,7 +44,13 @@ Sign in, then enable:
 chezmoi apply -v
 ```
 
-**6. Set the terminal shell**
+**6. Set the Omarchy defaults**
+
+```bash
+omarchy default terminal ghostty
+```
+
+**7. Set the terminal shell**
 
 ```bash
 mkdir -p ~/.config/ghostty
@@ -52,7 +58,7 @@ grep -q '^command' ~/.config/ghostty/config 2>/dev/null || \
   printf 'command = /usr/bin/zsh\n' >> ~/.config/ghostty/config
 ```
 
-**7. Verify**
+**8. Verify**
 
 ```bash
 cd ~/dotfiles
