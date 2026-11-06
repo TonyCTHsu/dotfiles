@@ -39,53 +39,55 @@ chezmoi apply -v
 chsh -s $(which zsh)
 ```
 
-## 1Password SSH Setup
+## SSH and Commit Signing
 
-Your Git configuration uses 1Password for SSH signing. To set this up:
+SSH signing keys live on the machine, not in an agent you approve by hand.
+Key files are encrypted in `~/.ssh`. Passphrases sit in the login keychain.
+The macOS ssh-agent loads the keys at every login. 1Password is only the
+master copy things restore from. Nothing in the git path prompts you.
 
-### 1. Install and Configure 1Password
+### How the pieces fit
 
-1. Install 1Password (included in Brewfile)
-2. Sign in to your 1Password account
-3. Go to **1Password → Settings → Developer**
-4. Enable **"Use the SSH agent"**
-5. Enable **"Display key names when authorizing connections"** (optional, but helpful)
+- `private_dot_ssh/run_once_import-from-1password.sh` runs on the first
+  `chezmoi apply` of a machine. It fetches the personal signing key from
+  1Password with `op`. It prompts once for a new passphrase, writes the
+  encrypted key file, and stores the passphrase in the login keychain.
+- `run_onchange_load-personal-signing-key.sh` installs the LaunchAgent
+  that loads `~/.ssh/id_github_signing` into the agent at every login.
+- `dot_gitconfig` makes the personal identity the default for every repo.
+- `~/.gitconfig.work-routing` and `~/.ssh/config.local` are untracked,
+  machine-local, and exist only on work machines. See the next section.
 
-### 2. Add Your SSH Key to 1Password
+If you ever delete `~/.ssh/id_github_signing` on purpose, `run_once_` will
+not re-import it. Re-run the import by hand or reset chezmoi's state for it.
 
-1. In 1Password, create a new SSH Key item:
-   - **Title**: "Git Signing Key" (or similar)
-   - **Private Key**: Your existing SSH private key, or generate a new one
-   - **Public Key**: Will be auto-generated or paste your existing public key
-
-2. Copy the public key from 1Password
-
-### 3. Configure Git Signing
-
-Your `gitconfig` is already configured for 1Password SSH signing, but you need to:
-
-1. Add your public key to `~/.ssh/allowed_signers`:
-   ```bash
-   echo "tonyc.t.hsu@gmail.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF1GXPznqwRRaFOpx6euCAiiiEUs93JC3czqvQq+777v" >> ~/.ssh/allowed_signers
-   ```
-   (Replace with your actual public key)
-
-2. Add your public key to GitHub:
-   - Go to GitHub → Settings → SSH and GPG keys
-   - Click "New SSH key"
-   - Paste your public key
-   - Set the key type to "Signing Key"
-
-### 4. Test SSH Signing
+### Test signing
 
 ```bash
-# Test SSH connection
 ssh -T git@github.com
-
-# Test a signed commit
 git commit --allow-empty -m "Test signed commit"
 git log --show-signature -1
 ```
+
+## Work Machines (DataDog)
+
+On a machine that also does DataDog work, two extra untracked files carry
+all the work-specific config. Copy them by hand:
+
+- `~/.ssh/config.local` includes the git-config-tool ssh_config.
+- `~/.gitconfig.work-routing` re-applies the work identity for repos with
+  DataDog or ddoghq-family remotes. Without it, work repos silently commit
+  as personal, and GitHub rejects the push with a key error.
+
+If the pieces are missing, `git config-tool doctor` fails its include
+check. The tool is the tripwire.
+
+For machines set up before git-config-tool v4, run
+`git config-tool system-migrate`, log out and back in, then run it once more
+and finish with `git config-tool setup`.
+
+Identity routing after that: personal by default, work identity by remote
+URL (`DataDog/**`, ddoghq family).
 
 ## Migrating an Existing Machine from rcm
 
