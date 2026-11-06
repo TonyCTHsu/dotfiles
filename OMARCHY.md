@@ -48,6 +48,8 @@ chezmoi apply -v
 
 ```bash
 omarchy default terminal ghostty
+omarchy default browser chrome
+omarchy default editor code
 ```
 
 **7. Set the terminal shell**
