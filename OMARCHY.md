@@ -5,7 +5,7 @@
 **1. Clone and install prerequisites**
 
 ```bash
-git clone -b tonyc.t.hsu/omarchy <your-repo-url> ~/dotfiles
+git clone -b tonyc.t.hsu/omarchy git@github.com:TonyCTHsu/dotfiles.git ~/dotfiles
 omarchy pkg add chezmoi vim
 ```
 
@@ -46,18 +46,18 @@ chezmoi apply -v
 
 **6. Set the terminal shell**
 
-foot, `~/.config/foot/foot.ini`:
-
-```ini
-[main]
-command=/usr/bin/zsh
+```bash
+mkdir -p ~/.config/foot
+grep -q '^command' ~/.config/foot/foot.ini 2>/dev/null || \
+  printf '[main]\ncommand=/usr/bin/zsh\n' >> ~/.config/foot/foot.ini
 ```
 
-kitty, `kitty.conf`: `shell zsh`
+kitty instead: `printf 'shell zsh\n' >> ~/.config/kitty/kitty.conf`
 
 **7. Verify**
 
 ```bash
+cd ~/dotfiles
 git commit --allow-empty -m "Test signed commit"
 git log --show-signature -1
 ```
