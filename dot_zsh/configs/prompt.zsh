@@ -3,8 +3,13 @@
 # Guard against re-sourcing: rerunning `prompt pure` in the same shell
 # can stack stale precmd state, causing the prompt header to be printed
 # multiple times per Enter.
-if [[ -z $prompt_pure_loaded ]] && [[ -n $HOMEBREW_PREFIX ]]; then
-  fpath+="$HOMEBREW_PREFIX/share/zsh/site-functions"
+if [[ -z $prompt_pure_loaded ]]; then
+  if [[ -n $HOMEBREW_PREFIX ]]; then
+    fpath+="$HOMEBREW_PREFIX/share/zsh/site-functions"
+  else
+    # Linux: prompt_pure comes from the zsh-pure-prompt AUR package.
+    fpath+=(/usr/share/zsh/site-functions /usr/share/zsh/functions/Prompts)
+  fi
   autoload -U promptinit; promptinit
 
   PURE_GIT_PULL=0

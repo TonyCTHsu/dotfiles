@@ -55,7 +55,6 @@ paru -Ss foo          # search repos and AUR
 
 ## Notes
 
-- The pure prompt does not load on Linux.
 - The first shell after boot asks for the signing key passphrase once.
   The systemd user ssh-agent holds the key for the rest of the session.
 - If a package name does not resolve, remove it from the list in
