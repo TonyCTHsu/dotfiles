@@ -1,7 +1,3 @@
-[user]
-	name = Tony Hsu
-	email = tonyc.t.hsu@gmail.com
-	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF1GXPznqwRRaFOpx6euCAiiiEUs93JC3czqvQq+777v
 [init]
 	defaultBranch = main
 	templatedir = ~/.git_template
@@ -65,19 +61,25 @@
 	format = ssh
 [gpg "ssh"]
 	program = ssh-keygen
-	allowedSignersFile = ~/.ssh/allowed_signers
-[includeIf "gitdir:~/datadog/"]
-	path = ~/.gitconfig.datadog
-[includeIf "gitdir:~/dd/"]
-	path = ~/.gitconfig.datadog
-[includeIf "gitdir:~/go/"]
-	path = ~/.gitconfig.datadog
-[includeIf "gitdir:~/ddoghq/"]
-	path = ~/.gitconfig.ddoghq
-
-# git-config-tool managed config: insteadOf rewrites, per-org identity.
+# Work git config from git-config-tool, before the personal identity so
+# its URL rewrites and signing keys apply everywhere. The per-org remote
+# routing blocks live in the untracked ~/.gitconfig.work-routing, keeping
+# org names out of this repo.
 # ponytail: absolute home path — git-config-tool's doctor string-matches
-# this line; make this a .tmpl with {{ .chezmoi.homeDir }} if you ever use a
-# machine where $HOME differs.
+# this line; make this a .tmpl with {{ .chezmoi.homeDir }} if you ever use
+# a machine where $HOME differs.
 [include]
 	path = /Users/tony.hsu/.config/datadog/git/config
+# Personal identity is the default for every repo, including repos
+# with no remote. It wins over the work config included above; the
+# routing file included below re-applies the work identity for repos
+# with work remotes only. Git skips missing includes, so machines
+# without the routing file just get this identity.
+[user]
+	name = Tony Hsu
+	email = tonyc.t.hsu@gmail.com
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF1GXPznqwRRaFOpx6euCAiiiEUs93JC3czqvQq+777v
+[gpg "ssh"]
+	allowedSignersFile = ~/.ssh/allowed_signers
+[include]
+	path = ~/.gitconfig.work-routing
