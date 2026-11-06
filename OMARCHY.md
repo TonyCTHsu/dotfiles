@@ -76,14 +76,7 @@ take time. You will be prompted once for a new passphrase for
 chezmoi apply -v
 ```
 
-**Step 6. Set up Docker, then log out and back in.**
-
-```bash
-sudo systemctl enable --now docker
-sudo usermod -aG docker $USER
-```
-
-**Step 7. Tell the terminal to run zsh.**
+**Step 6. Tell the terminal to run zsh.**
 
 Keep bash as the login shell, because the Omarchy startup
 scripts expect it. For foot, in `~/.config/foot/foot.ini`:
@@ -95,7 +88,7 @@ command=/usr/bin/zsh
 
 For kitty, in `kitty.conf`: `shell zsh`
 
-**Step 8. Verify.**
+**Step 7. Verify.**
 
 Open a new terminal. Zsh loads with syntax highlighting.
 Then check SSH signing:
