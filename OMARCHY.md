@@ -47,12 +47,10 @@ chezmoi apply -v
 **6. Set the terminal shell**
 
 ```bash
-mkdir -p ~/.config/foot
-grep -q '^command' ~/.config/foot/foot.ini 2>/dev/null || \
-  printf '[main]\ncommand=/usr/bin/zsh\n' >> ~/.config/foot/foot.ini
+mkdir -p ~/.config/ghostty
+grep -q '^command' ~/.config/ghostty/config 2>/dev/null || \
+  printf 'command = /usr/bin/zsh\n' >> ~/.config/ghostty/config
 ```
-
-kitty instead: `printf 'shell zsh\n' >> ~/.config/kitty/kitty.conf`
 
 **7. Verify**
 
