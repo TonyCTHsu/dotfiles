@@ -94,7 +94,7 @@ URL (`DataDog/**`, ddoghq family).
 The repo also applies on an Omarchy machine. The macOS-only files
 (Brewfile, finicky, itermcolors, the signing-key LaunchAgent). The
 `.chezmoiignore` template gates them out. Packages come from `omarchy pkg add` instead of
-`brew bundle`, via `run_onchange_install-arch-packages.sh`.
+`brew bundle`, via `run_onchange_before_install-arch-packages.sh`.
 
 ### First-time setup
 
@@ -135,7 +135,7 @@ sudo usermod -aG docker $USER
 - The pure prompt does not load. `dot_zsh/configs/prompt.zsh` sources it
   from Homebrew paths only, so the default prompt shows instead.
 - The package list is a first draft. If a package name does not resolve,
-  remove it from the list in `run_onchange_install-arch-packages.sh` and
+  remove it from the list in `run_onchange_before_install-arch-packages.sh` and
   run `chezmoi apply` again.
 - SSH signing: the 1Password import script runs on Linux too. It needs
   the 1Password CLI and python-cryptography, which the package script
