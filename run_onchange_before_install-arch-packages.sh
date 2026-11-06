@@ -9,7 +9,7 @@ set -e
 command -v pacman >/dev/null 2>&1 || exit 0
 
 repo="tmux neovim git github-cli glab fzf jq yamllint shellcheck actionlint
-pre-commit direnv tree htop btop fastfetch tealdeer ghostty vale uv chezmoi make sqlite
+pre-commit direnv tree htop btop fastfetch ghostty vale uv chezmoi make sqlite
 docker docker-buildx docker-compose podman podman-compose
 k9s kubectx helm minikube crane dive lazydocker vim
 pyenv rbenv zsh zsh-autosuggestions zsh-syntax-highlighting python-cryptography obsidian"
