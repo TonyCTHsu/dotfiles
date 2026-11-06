@@ -14,5 +14,5 @@ dot_finicky.js
 dot_0x96f.itermcolors
 run_onchange_load-personal-signing-key.sh
 {{ else if eq .chezmoi.os "darwin" }}
-run_onchange_install-arch-packages.sh
+run_onchange_before_install-arch-packages.sh
 {{ end }}
