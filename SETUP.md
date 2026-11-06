@@ -98,36 +98,87 @@ The repo also applies on an Omarchy machine. The macOS-only files
 
 ### First-time setup
 
+Follow the steps in order. Each step is one command block.
+
+**Step 1. Clone the repo and install prerequisites.**
+
+The package script installs everything else, but it needs
+chezmoi and git first. The script does not install vim either.
+
 ```bash
-# 1. Clone and install prerequisites (chezmoi and vim are not in the
-#    package script)
 git clone <your-repo-url> ~/dotfiles
 omarchy pkg add chezmoi vim
+```
 
-# 2. Point chezmoi at this checkout, same as on macOS
+On a machine that already has the clone, switch it to the Omarchy
+branch instead:
+
+```bash
+cd ~/dotfiles && git fetch && git checkout tonyc.t.hsu/omarchy
+```
+
+**Step 2. Point chezmoi at this checkout.**
+
+Same as on macOS.
+
+```bash
 mkdir -p ~/.config/chezmoi
 cat > ~/.config/chezmoi/chezmoi.toml <<'EOF'
 sourceDir = "$HOME/dotfiles"
 EOF
+```
 
-# 3. Dry-run first. Review the file list. No macOS-only files should
-#    appear.
+**Step 3. Dry-run first.**
+
+Review the file list. Expect no macOS-only files in it.
+
+```bash
 chezmoi apply --dry-run
+```
 
-# 4. Apply. The first run installs the package list. Expect 30 to 60
-#    minutes, because AUR builds like 1Password take time.
+**Step 4. Sign into the 1Password app.**
+
+The import script calls the `op` CLI, which needs an
+authenticated account.
+
+**Step 5. Apply.**
+
+The package script runs first and installs the package list.
+Expect 30 to 60 minutes, because AUR builds like 1Password
+take time. You will be prompted once for a new passphrase for
+`~/.ssh/id_github_signing`.
+
+```bash
 chezmoi apply -v
+```
 
-# 5. Docker needs one-time setup, then log out and back in
+**Step 6. Set up Docker, then log out and back in.**
+
+```bash
 sudo systemctl enable --now docker
 sudo usermod -aG docker $USER
+```
 
-# 6. Keep bash as the login shell (Omarchy startup scripts expect it).
-#    Tell the terminal to run zsh instead. For foot, in
-#    ~/.config/foot/foot.ini:
-#      [main]
-#      command=/usr/bin/zsh
-#    For kitty, in kitty.conf: shell zsh
+**Step 7. Tell the terminal to run zsh.**
+
+Keep bash as the login shell, because the Omarchy startup
+scripts expect it. For foot, in `~/.config/foot/foot.ini`:
+
+```ini
+[main]
+command=/usr/bin/zsh
+```
+
+For kitty, in `kitty.conf`: `shell zsh`
+
+**Step 8. Verify.**
+
+Open a new terminal. Zsh loads with syntax highlighting.
+Then check SSH signing:
+
+```bash
+git commit --allow-empty -m "Test signed commit"
+git log --show-signature -1
 ```
 
 ### Known gaps on Linux
