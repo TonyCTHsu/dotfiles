@@ -89,6 +89,58 @@ and finish with `git config-tool setup`.
 Identity routing after that: personal by default, work identity by remote
 URL (`DataDog/**`, ddoghq family).
 
+## Omarchy (Arch Linux)
+
+The repo also applies on an Omarchy machine. The macOS-only files
+(Brewfile, finicky, itermcolors, the signing-key LaunchAgent). The
+`.chezmoiignore` template gates them out. Packages come from `omarchy pkg add` instead of
+`brew bundle`, via `run_onchange_install-arch-packages.sh`.
+
+### First-time setup
+
+```bash
+# 1. Clone and install prerequisites (chezmoi and vim are not in the
+#    package script)
+git clone <your-repo-url> ~/dotfiles
+omarchy pkg add chezmoi vim
+
+# 2. Point chezmoi at this checkout, same as on macOS
+mkdir -p ~/.config/chezmoi
+cat > ~/.config/chezmoi/chezmoi.toml <<'EOF'
+sourceDir = "$HOME/dotfiles"
+EOF
+
+# 3. Dry-run first. Review the file list. No macOS-only files should
+#    appear.
+chezmoi apply --dry-run
+
+# 4. Apply. The first run installs the package list. Expect 30 to 60
+#    minutes, because AUR builds like 1Password take time.
+chezmoi apply -v
+
+# 5. Docker needs one-time setup, then log out and back in
+sudo systemctl enable --now docker
+sudo usermod -aG docker $USER
+
+# 6. Keep bash as the login shell (Omarchy startup scripts expect it).
+#    Tell the terminal to run zsh instead. For foot, in
+#    ~/.config/foot/foot.ini:
+#      [main]
+#      command=/usr/bin/zsh
+#    For kitty, in kitty.conf: shell zsh
+```
+
+### Known gaps on Linux
+
+- The pure prompt does not load. `dot_zsh/configs/prompt.zsh` sources it
+  from Homebrew paths only, so the default prompt shows instead.
+- The package list is a first draft. If a package name does not resolve,
+  remove it from the list in `run_onchange_install-arch-packages.sh` and
+  run `chezmoi apply` again.
+- SSH signing setup is macOS only so far. The 1Password import script and
+  the LaunchAgent do not run on Linux. Copy signing keys by hand into
+  `~/.ssh` and set up the Linux ssh-agent yourself.
+
 ## Migrating an Existing Machine from rcm
 
 If a machine is still running the old `rcm`-based setup (from before this repo switched to
@@ -147,8 +199,8 @@ vim -u ~/.vimrc.bundles +PlugUpdate +PlugClean! +qa
 
 ## Troubleshooting
 
-### Shell Issues
-If you see shell errors after installation:
+### Fixing shell errors
+Restart the shell when errors appear after installation:
 ```bash
 # Restart your shell
 exec zsh
@@ -164,7 +216,7 @@ sudo chown -R $(whoami):staff ~
 ```
 
 ### 1Password SSH Issues
-If Git signing isn't working:
+If Git signing does not work:
 1. Verify 1Password SSH agent is enabled
 2. Check that your public key is in `~/.ssh/allowed_signers`
 3. Verify the key is added to GitHub as a signing key
