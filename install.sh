@@ -116,8 +116,11 @@ if [[ "$OS" == "arch" ]]; then
     omarchy default editor code
 
     mkdir -p "$HOME/.config/ghostty"
-    grep -q '^command' "$HOME/.config/ghostty/config" 2>/dev/null || \
+    if grep -q '^command' "$HOME/.config/ghostty/config" 2>/dev/null; then
+        sed -i 's|^command *=.*|command = /usr/bin/zsh|' "$HOME/.config/ghostty/config"
+    else
         printf 'command = /usr/bin/zsh\n' >> "$HOME/.config/ghostty/config"
+    fi
     print_success "Omarchy defaults set"
 fi
 
