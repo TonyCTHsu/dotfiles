@@ -14,7 +14,7 @@ docker docker-buildx docker-compose podman podman-compose
 k9s kubectx helm minikube crane dive lazydocker vim
 pyenv rbenv zsh zsh-autosuggestions zsh-syntax-highlighting python-cryptography obsidian"
 
-aur="kubectl-bin 1password 1password-cli google-chrome visual-studio-code-bin slack spotify"
+aur="1password 1password-cli google-chrome visual-studio-code-bin slack spotify"
 
 if command -v omarchy >/dev/null 2>&1; then
   omarchy pkg add $repo
