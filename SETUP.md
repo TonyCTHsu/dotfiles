@@ -137,9 +137,10 @@ sudo usermod -aG docker $USER
 - The package list is a first draft. If a package name does not resolve,
   remove it from the list in `run_onchange_install-arch-packages.sh` and
   run `chezmoi apply` again.
-- SSH signing setup is macOS only so far. The 1Password import script and
-  the LaunchAgent do not run on Linux. Copy signing keys by hand into
-  `~/.ssh` and set up the Linux ssh-agent yourself.
+- SSH signing: the 1Password import script runs on Linux too. It needs
+  the 1Password CLI and python-cryptography, which the package script
+  installs. Linux has no keychain. Git asks for the key passphrase
+  at each commit until the key is loaded into an ssh-agent.
 
 ## Migrating an Existing Machine from rcm
 
