@@ -8,7 +8,7 @@
 command -v pacman >/dev/null 2>&1 || exit 0
 
 repo="tmux neovim git github-cli glab fzf jq yamllint shellcheck actionlint
-pre-commit direnv tree htop btop fastfetch tealdeer uv chezmoi make sqlite
+pre-commit direnv tree htop btop fastfetch tealdeer vale uv chezmoi make sqlite
 docker docker-buildx docker-compose podman podman-compose
 k9s kubectx kubernetes-cli helm minikube crane dive lazydocker
 pyenv rbenv zsh zsh-autosuggestions zsh-syntax-highlighting python-cryptography obsidian"
