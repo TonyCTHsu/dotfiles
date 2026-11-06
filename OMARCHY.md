@@ -107,6 +107,9 @@ git log --show-signature -1
 
 ## Package commands
 
+The dotfiles alias `om` for `omarchy`, so the commands below also work as
+`om pkg add foo`.
+
 ```bash
 omarchy pkg add foo        # official Arch repos, skips what is installed
 omarchy pkg aur add foo    # AUR build, via paru
