@@ -5,7 +5,7 @@ obsidian
 # EXCLUDES="*.md LICENSE CODEOWNERS")
 *.md
 LICENSE
-install.sh
+install*.sh
 
 # macOS-only: never applied on Linux/Omarchy. Entries are TARGET
 # names: chezmoi strips run_*/dot_* source prefixes when matching.
