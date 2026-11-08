@@ -5,14 +5,14 @@
 **1. Run the installer**
 
 ```bash
-git clone -b tonyc.t.hsu/omarchy git@github.com:TonyCTHsu/dotfiles.git ~/dotfiles
+git clone https://github.com/TonyCTHsu/dotfiles.git ~/dotfiles
 ~/dotfiles/install.sh
 ```
 
 Existing clone:
 
 ```bash
-cd ~/dotfiles && git fetch && git checkout tonyc.t.hsu/omarchy && ./install.sh
+cd ~/dotfiles && git pull && ./install.sh
 ```
 
 The first run installs all packages, then stops at the 1Password
