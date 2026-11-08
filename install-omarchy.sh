@@ -1,12 +1,12 @@
 #!/bin/bash
-# Arch/Omarchy installer: chezmoi, dotfiles, Omarchy defaults,
+# Omarchy installer: chezmoi, dotfiles, Omarchy defaults,
 # ghostty shell.
 
 set -e
 
 . "$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)/install-lib.sh"
 
-print_info "Starting dotfiles installation for Arch/Omarchy..."
+print_info "Starting dotfiles installation for Omarchy..."
 
 if ! command -v chezmoi >/dev/null 2>&1; then
     print_info "Installing chezmoi..."

@@ -4,6 +4,6 @@
 dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 case "$(uname -s)" in
   Darwin) exec "$dir/install-darwin.sh" "$@" ;;
-  Linux)  exec "$dir/install-arch.sh" "$@" ;;
+  Linux)  exec "$dir/install-omarchy.sh" "$@" ;;
   *) echo "Unsupported platform: $(uname -s)" >&2; exit 1 ;;
 esac
