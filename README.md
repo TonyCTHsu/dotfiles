@@ -26,7 +26,7 @@ rationale behind the current chezmoi layout, see [MIGRATION.md](MIGRATION.md).
 ## Requirements
 
 - macOS or Arch Linux (Omarchy)
-- Git (automatically prompts to install Command Line Tools if needed)
+- Git (macOS prompts to install Command Line Tools when it is missing)
 
 ## Updating
 
@@ -45,9 +45,9 @@ vim -u ~/.vimrc.bundles +PlugUpdate +PlugClean! +qa
 
 ## Machine-Specific Customizations
 
-For machine-specific shell settings that shouldn't be committed (e.g. company-managed
-environment variables), create `~/.zshrc.local` - it's sourced automatically by
-`dot_zshrc` if present.
+For machine-specific shell settings that must not be committed (for example,
+company-managed environment variables), create `~/.zshrc.local`.
+`dot_zshrc` sources it automatically when present.
 
 Git identity is instead handled per-repo-path via `includeIf "gitdir:..."` in
 `dot_gitconfig` - see that file for the pattern.
@@ -57,9 +57,9 @@ Git identity is instead handled per-repo-path via `includeIf "gitdir:..."` in
 [vim](http://www.vim.org/) configuration:
 
 - [fzf](https://github.com/junegunn/fzf.vim) for fuzzy file/buffer/tag finding.
-- [Rails.vim](https://github.com/tpope/vim-rails) for enhanced navigation of
+- [Rails.vim](https://github.com/tpope/vim-rails) for improved navigation of
   Rails file structure via `gf` and `:A` (alternate), `:Rextract` partials,
-  `:Rinvert` migrations, etc.
+  and `:Rinvert` migrations.
 - Run many kinds of tests [from vim]([https://github.com/janko-m/vim-test)
 - Set `<leader>` to a single space.
 - Switch between the last two files with space-space.
@@ -124,8 +124,8 @@ Shell aliases and scripts:
 - `v` for `$VISUAL`.
 
 [Obsidian](https://obsidian.md) appearance config (`appearance.json`, `core-plugins.json`,
-`community-plugins.json`, `snippets/`) — not wired into `install.sh` since not every machine
-has the vault. Run manually per machine:
+`community-plugins.json`, `snippets/`). It is not wired into `install.sh`, since not every
+machine has the vault. Run manually per machine:
 
 ```bash
 link-obsidian [vault_path]  # defaults to $HOME/obsidian
@@ -133,8 +133,9 @@ link-obsidian [vault_path]  # defaults to $HOME/obsidian
 
 This symlinks those files/directories into the vault's `.obsidian/` folder so appearance
 tweaks stay in sync across machines. Vault content and other `.obsidian/` state
-(`workspace.json`, `plugins/`, etc.) are left untouched. Community themes (e.g. Minimal)
-aren't vendored here — reinstall them per machine via Settings → Appearance → Themes.
+(`workspace.json`, `plugins/`, and similar files) are left untouched. Community themes
+(for example, Minimal) are not vendored here. Reinstall them per machine via Settings →
+Appearance → Themes.
 
 ## Credits
 
