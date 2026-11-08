@@ -4,21 +4,20 @@ Based on [thoughtbot dotfiles](https://github.com/thoughtbot/dotfiles) with pers
 
 ## Quick Start
 
-For a new Mac:
+Same one-liner on both platforms. `install.sh` dispatches per OS:
 
 ```bash
 git clone https://github.com/TonyCTHsu/dotfiles ~/dotfiles && ~/dotfiles/install.sh
 ```
 
-The install script will:
-- Install Homebrew (if needed)
-- Install all dependencies from Brewfile
-- Set up dotfiles with chezmoi
-- Configure zsh as default shell
+On a new Mac, that is all. On a new Omarchy (Arch Linux) machine, the
+first run stops at the 1Password check. Follow [OMARCHY.md](OMARCHY.md)
+for the two extra steps.
 
 ## Manual Install
 
-If you prefer manual control, see [SETUP.md](SETUP.md) for detailed instructions.
+If you prefer manual control, see [SETUP.md](SETUP.md) for macOS or
+[OMARCHY.md](OMARCHY.md) for Omarchy.
 
 Migrating a machine still running the old `rcm`-based setup? See
 [SETUP.md](SETUP.md#migrating-an-existing-machine-from-rcm). For the structure and
@@ -26,7 +25,7 @@ rationale behind the current chezmoi layout, see [MIGRATION.md](MIGRATION.md).
 
 ## Requirements
 
-- macOS
+- macOS or Arch Linux (Omarchy)
 - Git (automatically prompts to install Command Line Tools if needed)
 
 ## Updating
