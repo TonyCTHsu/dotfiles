@@ -7,7 +7,7 @@
 
 - A question or an opinion request ("what do you think") asks for
   analysis. Answer in prose
-  with a recommendation. Show code as a snippet or a proposed diff; leave
+  with a recommendation. Show code as a snippet or a proposed diff, and leave
   the files untouched.
 - Edits need an imperative: "do", "make", "add", "fix", "revert",
   "implement", or a "yes" / "go ahead" reply to a proposal.
@@ -22,18 +22,17 @@
 
 ## Committing
 
-- One commit per distinct concern; combine only when inseparable (e.g. a rename touching many files) — even when fixing several review comments in one pass
+- One commit per distinct concern. Combine commits only when inseparable, for example a rename touching many files. This applies even when fixing several review comments in one pass
 - Do not amend commits. Each change is a new commit on top of the
   previous one
 - Never commit on the default branch, branch name always prefix with `tonyc.t.hsu/` to be explicit about ownership
-- Run git commands that can open an editor (`commit`, `rebase --continue`, `merge`) with `--no-edit` or `GIT_EDITOR=true`; an interactive editor hangs non-interactive agent sessions
+- Run git commands that can open an editor (`commit`, `rebase --continue`, `merge`) with `--no-edit` or `GIT_EDITOR=true`. An interactive editor hangs non-interactive agent sessions
 - A repo's own conventions win over the defaults in this file
 
 ## Remote access
 
-- Never change the remote without explicit consent from me in the current session. This includes `git push` (any form, including `--force-with-lease`), `gh pr create`, `gh issue create`, `gh repo create`, and commands that edit GitHub settings
+- Never change the remote without explicit consent from me in the current session. That includes `git push` in any form and `gh pr create`. It also includes `gh issue create`, `gh repo create`, and commands that edit GitHub settings
 - Local operations (commits, amends, branch creation) are fine
-- If work is ready to push, stop and ask
 
 ## Git workflow: worktrees over in-place branching
 

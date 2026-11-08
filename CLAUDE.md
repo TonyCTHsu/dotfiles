@@ -39,7 +39,7 @@ All configuration changes must be idempotent - safe to run multiple times withou
 - Use conditional checks before tool initialization: `if command -v tool >/dev/null 2>&1; then`
 - Test file existence before sourcing: `[ -f "$file" ] && source "$file"`
 - Commands like `chezmoi apply` and `brew bundle` are inherently idempotent
-- Avoid operations that fail on subsequent runs (unconditional `eval` statements, etc.)
+- Avoid operations that fail on subsequent runs (for example, unconditional `eval` statements)
 
 ### Security and Data Protection
 Never commit actual secrets or credentials to the repository:
@@ -64,12 +64,12 @@ export GITHUB_TOKEN=$(op read "op://Personal/GitHub/token")
 ## Architecture and Key Patterns
 
 ### chezmoi Configuration System
-- Source directory (`~/dotfiles`, via `chezmoi init --source`) mirrors `$HOME` with attribute-prefixed names: `dot_foo` → `~/.foo`, `private_dot_ssh` → `~/.ssh` (0700/0600 perms), `symlink_dot_claude` → `~/.claude` as a symlink.
-- `.chezmoiignore` excludes source-only helper directories (`claude`, `obsidian`) from being applied as their own targets — they're only reachable via symlink target or an explicit script (`link-obsidian`), not by name.
-- Files like `Brewfile` have no `dot_` prefix, so they're managed as source-repo files rather than symlinked into `$HOME`.
-- Per-machine shell overrides use a plain, untracked `~/.zshrc.local` (sourced by `dot_zshrc`) — chezmoi doesn't manage it, so this pattern is unchanged from before. Git identity instead uses git's own `includeIf "gitdir:..."` in `dot_gitconfig`, scoped per repo path rather than per machine.
-- One-time or content-triggered setup steps live in `run_once_*`/`run_onchange_*` scripts (e.g. vim-plug install, `PlugUpdate` on `dot_vimrc.bundles` changes), replacing the old `hooks/post-up` script.
-- See [MIGRATION.md](MIGRATION.md) for the full rationale behind this structure (why `private_` needs to be on individual files, why scripts have `|| true`, why `hooks/post-up` split into three scripts, etc.), and [SETUP.md](SETUP.md#migrating-an-existing-machine-from-rcm) for migrating a machine still running the old `rcm` setup.
+- Source directory (`~/dotfiles`, via `chezmoi init --source`) mirrors `$HOME` with attribute-prefixed names. Examples: `dot_foo` → `~/.foo`, `private_dot_ssh` → `~/.ssh` (0700/0600 perms), `symlink_dot_claude` → `~/.claude` as a symlink.
+- `.chezmoiignore` excludes source-only helper directories (`claude`, `obsidian`) from being applied as their own targets. They are only reachable via symlink target or an explicit script (`link-obsidian`), not by name.
+- Files like `Brewfile` have no `dot_` prefix. `.chezmoiignore` lists them, so they stay repo-only instead of being applied into `$HOME`.
+- Per-machine shell overrides use a plain, untracked `~/.zshrc.local` (sourced by `dot_zshrc`). chezmoi does not manage it, so this pattern is unchanged from before. Git identity instead uses git's own `includeIf "gitdir:..."` in `dot_gitconfig`, scoped per repo path rather than per machine.
+- One-time or content-triggered setup steps live in `run_once_*`/`run_onchange_*` scripts (for example, vim-plug install and `PlugUpdate` on `dot_vimrc.bundles` changes). They replace the old `hooks/post-up` script.
+- See [MIGRATION.md](MIGRATION.md) for the full rationale behind this structure. It covers why `private_` needs to be on individual files. It also explains why scripts have `|| true` and why `hooks/post-up` split into three scripts. [SETUP.md](SETUP.md#migrating-an-existing-machine-from-rcm) covers migrating a machine still running the old `rcm` setup.
 
 ### Zsh Configuration Structure
 - `dot_zsh/configs/`: Modular configuration system
@@ -81,7 +81,7 @@ export GITHUB_TOKEN=$(op read "op://Personal/GitHub/token")
 ### Git Configuration Pattern
 - `dot_gitconfig`: Main git configuration with thoughtbot conventions
 - `dot_git_template/hooks/`: Git hooks for ctags integration
-- `dot_bin/git-*`: Custom git subcommands (create-branch, delete-branch, etc.)
+- `dot_bin/git-*`: Custom git subcommands (for example, create-branch and delete-branch)
 - SSH signing with 1Password integration
 
 ### Vim Configuration System
@@ -91,11 +91,11 @@ export GITHUB_TOKEN=$(op read "op://Personal/GitHub/token")
 
 ### Key Scripts and Utilities
 - `run_once_*`/`run_onchange_*` scripts: Run on `chezmoi apply`, handle vim plugin updates and system checks
-- `dot_bin/` directory: Contains various development utilities (tat, replace, etc.)
+- `dot_bin/` directory: Contains various development utilities (for example, tat and replace)
 - `dot_aliases`: Shell aliases for common development tasks
 
 ### Local Customization Pattern
-- Shell customization that shouldn't be committed goes in `~/.zshrc.local`, a plain untracked file sourced by `dot_zshrc` via a `[[ -f ... ]] && source` guard — chezmoi never manages or overwrites it
+- Shell customization that must not be committed goes in `~/.zshrc.local`, a plain untracked file. `dot_zshrc` sources it via a `[[ -f ... ]] && source` guard, so chezmoi never manages or overwrites it
 - Git identity is instead scoped per repo path via `includeIf "gitdir:..."` in `dot_gitconfig`, not a machine-wide `.local` file
 
 ### Development Tool Integration
@@ -107,7 +107,7 @@ export GITHUB_TOKEN=$(op read "op://Personal/GitHub/token")
 - **VS Code**: Use built-in Settings Sync instead of dotfiles management
 
 ### VS Code Configuration
-VS Code settings, keybindings, and extensions should be managed using VS Code's built-in Settings Sync feature rather than including them in this dotfiles repository.
+VS Code settings, keybindings, and extensions belong in VS Code's built-in Settings Sync feature. Do not include them in this dotfiles repository.
 
 #### Setup Instructions
 1. **Enable Settings Sync**: Open Command Palette (`Cmd+Shift+P`) → "Settings Sync: Turn On"

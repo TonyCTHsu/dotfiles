@@ -4,5 +4,9 @@
 
 ## Committing
 
-- Default to multiple small, logically-scoped commits over one large commit — one commit per distinct concern (e.g. config change, behavior fix, comment/doc clarification), even when fixing several review comments in one pass.
-- Only combine changes into a single commit when they are inseparable (e.g. a rename that touches many files for one reason).
+- Default to multiple small, logically-scoped commits over one large
+  commit. Use one commit per distinct concern, for example a config
+  change or a behavior fix. This applies even when fixing several
+  review comments in one pass.
+- Only combine changes into a single commit when they are inseparable.
+  An example is a rename that touches many files for one reason.
