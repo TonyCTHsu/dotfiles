@@ -1,11 +1,11 @@
-# Setup Instructions
+# macOS Setup
 
 ## Quick Start
 
 For a new Mac, run this one-liner:
 
 ```bash
-git clone <your-repo-url> ~/dotfiles && ~/dotfiles/install.sh
+git clone https://github.com/TonyCTHsu/dotfiles.git ~/dotfiles && ~/dotfiles/install.sh
 ```
 
 ## Manual Setup
@@ -14,7 +14,7 @@ If you prefer manual control:
 
 ```bash
 # 1. Clone the repository
-git clone <your-repo-url> ~/dotfiles
+git clone https://github.com/TonyCTHsu/dotfiles.git ~/dotfiles
 
 # 2. Install Homebrew (if needed)
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -88,51 +88,6 @@ and finish with `git config-tool setup`.
 
 Identity routing after that: personal by default, work identity by remote
 URL (`DataDog/**`, ddoghq family).
-
-## Omarchy (Arch Linux)
-
-Omarchy machines have their own setup guide. See [OMARCHY.md](OMARCHY.md).
-
-## Migrating an Existing Machine from rcm
-
-If a machine is still running the old `rcm`-based setup (from before this repo switched to
-chezmoi), bring it in line like this:
-
-```bash
-# 1. Backup anything rcm currently manages, in case of local edits that never
-#    made it back into the repo
-mkdir -p ~/dotfiles-backup
-for f in ~/.zshrc ~/.vimrc ~/.gitconfig ~/.tmux.conf ~/.ssh/config; do
-  [ -e "$f" ] && cp -a "$f" ~/dotfiles-backup/
-done
-
-# 2. Pull the migrated repo
-cd ~/dotfiles && git pull
-
-# 3. Install chezmoi if not already present
-brew install chezmoi
-
-# 4. Point chezmoi at this checkout as its source dir
-#    (chezmoi init --source exists but only applies to that one invocation
-#    and isn't persisted, so it's written directly here instead)
-mkdir -p ~/.config/chezmoi
-cat > ~/.config/chezmoi/chezmoi.toml <<'EOF'
-sourceDir = "$HOME/dotfiles"
-EOF
-
-# 5. Dry-run first — see exactly what would change before touching anything
-chezmoi diff
-
-# 6. Apply
-chezmoi apply -v
-
-# 7. Once confirmed working, remove the old rcm setup
-rm -f ~/.rcrc
-brew uninstall rcm
-```
-
-On a machine that never ran `rcm` against this repo, skip straight to
-`~/dotfiles/install.sh`, which now bootstraps chezmoi automatically.
 
 ## Updating Your Dotfiles
 
