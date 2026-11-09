@@ -9,7 +9,7 @@ fi
 # Re-add SSH signing keys to the agent after reboot; passphrases come from
 # the keychain. macOS only: --apple-use-keychain does not exist on Linux.
 if [[ "$(uname)" == "Darwin" ]]; then
-  for key in ~/.ssh/id_github_signing ~/.ssh/id_datadog_signing ~/.ssh/id_datadog_signing_ddoghq; do
+  for key in ~/.ssh/id_github_signing ~/.ssh/id_homelab ~/.ssh/id_datadog_signing ~/.ssh/id_datadog_signing_ddoghq; do
     [ -f "$key" ] && ssh-add --apple-use-keychain "$key" 2>/dev/null
   done
 fi
