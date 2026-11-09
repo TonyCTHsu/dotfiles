@@ -4,14 +4,7 @@ This file gives guidance to AI coding agents (Claude Code, Codex, Amp, pi) that 
 
 ## Overview
 
-This repo stores dotfiles and is the chezmoi source directory. The tool `chezmoi` copies the files into `$HOME`. It works on macOS and on Omarchy (Arch Linux). The repo holds configuration only. There is no app code, so there is nothing to build, test, or lint.
-
-## Commands
-
-```sh
-chezmoi apply      # run after every edit to the source dir
-brew bundle        # install packages after changing Brewfile
-```
+This repo stores dotfiles and is the chezmoi source directory. The tool `chezmoi` copies the files into `$HOME`. It works on macOS and on Omarchy (Arch Linux). `install.sh` picks the installer for the platform: `install-darwin.sh` on macOS, `install-omarchy.sh` on Linux. The repo holds configuration only. There is no app code, so there is nothing to build, test, or lint.
 
 ## Design principles
 
