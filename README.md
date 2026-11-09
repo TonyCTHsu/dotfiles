@@ -17,6 +17,18 @@ On a new Mac, that is all. On a new Omarchy (Arch Linux) machine, the first run 
 - [MACOS.md](MACOS.md): manual macOS setup, SSH and commit signing, work machines.
 - [OMARCHY.md](OMARCHY.md): Omarchy (Arch Linux) setup, package commands.
 
+## What I use
+
+The [Brewfile](Brewfile) is the full list. The short version:
+
+- **Shell**: zsh with syntax highlighting and autosuggestions, the `pure` prompt, fzf, direnv, and aliases for git, containers, and kubernetes.
+- **Editors**: vim (vim-plug) and Neovim. VS Code syncs its own settings.
+- **Terminal**: ghostty and iTerm2, tmux.
+- **Containers**: docker, podman, colima, minikube, helm, kubectl, k9s, kubectx, lazydocker, dive, crane.
+- **Languages**: Ruby (rbenv), Python (pyenv and uv), Go, Node, Terraform (tfenv).
+- **Git**: gh, glab, pre-commit, SSH commit signing through 1Password.
+- **Apps**: 1Password, raycast, obsidian, tailscale, slack, spotify, firefox, chrome.
+
 ## Requirements
 
 - macOS or Arch Linux (Omarchy)
