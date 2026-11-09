@@ -15,8 +15,7 @@ Existing clone:
 cd ~/dotfiles && git pull && ./install.sh
 ```
 
-The first run installs all packages, then stops at the 1Password
-check and prints the missing steps.
+The first run installs all packages, then waits at the 1Password step.
 
 **2. Set up the 1Password app**
 
@@ -26,17 +25,9 @@ Open the 1Password app, sign in, and enable:
 - Settings > Developer > "Integrate with 1Password CLI"
 - Settings > General > "Keep 1Password in the system tray"
 
-**3. Run the installer again**
+The installer detects when you are done and continues. It imports the signing key, applies all dotfiles, and sets the Omarchy defaults (ghostty terminal, chrome browser, vscode editor).
 
-```bash
-~/dotfiles/install.sh
-```
-
-The second run imports the signing key, applies all dotfiles, and
-sets the Omarchy defaults (ghostty terminal, chrome browser, vscode
-editor).
-
-**4. Verify**
+**3. Verify**
 
 ```bash
 cd ~/dotfiles
