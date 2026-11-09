@@ -20,4 +20,5 @@ install-arch-packages.sh
 setup-tailscale.sh
 harden-ssh-ufw.sh
 install-authorized-key.sh
+disable-sleep.sh
 {{ end }}
