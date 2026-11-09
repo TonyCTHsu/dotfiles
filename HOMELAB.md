@@ -62,7 +62,30 @@ https://login.tailscale.com/admin/acls, add at the top level:
 This lets each tailnet member SSH into their own devices as any non-root
 user or root, authenticated by tailnet identity.
 
-### 3. Reserve the server's LAN address
+### 3. Enable TPM disk auto-unlock (per Omarchy machine)
+
+Omarchy installs with a LUKS-encrypted root. The passphrase prompt
+blocks unattended reboots, and the kernel hides it (`quiet splash`), so
+a headless boot looks like a hang. With the passphrase kept as
+fallback, enroll the TPM so boots unlock themselves:
+
+1. BIOS (F1 at the Lenovo splash): Security, TPM 2.0, Enabled. Never
+   choose Clear TPM.
+2. Enroll the chip:
+
+   ```bash
+   sudo systemd-cryptenroll --tpm2-device=auto \
+     /dev/disk/by-partuuid/<the-root-partition-uuid>
+   ```
+
+   It asks for the current passphrase once. The passphrase slot stays
+   enrolled, and the TPM is added as a second key.
+
+If firmware changes ever invalidate the TPM slot, boot falls back to
+the passphrase prompt. Type it once at the console, then re-run the
+enroll command.
+
+### 4. Reserve the server's LAN address
 
 In the router admin page, create a DHCP reservation for the server's
 MAC address. The tailnet path does not need it, but LAN access and
