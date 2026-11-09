@@ -58,11 +58,11 @@ Then on the Mac:
 
 1. Install Tailscale (`brew install --cask tailscale-app`) and sign in
    with the same account.
-2. Find the ThinkCentre's MagicDNS name (`tailscale status` on either
+2. Find the machine's MagicDNS name (`tailscale status` on either
    machine).
-3. Put that name in the `Host thinkcentre` block in
+3. Put that name in the `Host omarchy` block in
    `private_dot_ssh/private_config`, then `chezmoi apply` on the Mac.
-4. Test with `ssh thinkcentre`.
+4. Test with `ssh omarchy`.
 
 Set a DHCP reservation for the ThinkCentre in the router so the LAN
 address stays stable for backup traffic.
