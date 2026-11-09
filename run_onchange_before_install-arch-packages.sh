@@ -23,3 +23,8 @@ else
   sudo pacman -S --needed $repo
   command -v paru >/dev/null 2>&1 && paru -S --needed $aur
 fi
+
+# Fail loudly when a package was silently skipped: omarchy pkg add
+# drops names it cannot resolve without failing (tailscale on the
+# first homelab box).
+pacman -Q tailscale ufw >/dev/null
