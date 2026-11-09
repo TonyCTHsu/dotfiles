@@ -1,0 +1,15 @@
+{{ if eq .chezmoi.os "darwin" -}}
+{
+  "targets": {
+    "omarchy": {
+      "type": "ssh",
+      "host": "omarchy",
+      "identityFile": "~/.ssh/id_homelab",
+      "cwd": "/home/tonycthsu",
+      "shell": "bash"
+    }
+  }
+}
+{{- else -}}
+{}
+{{- end }}
