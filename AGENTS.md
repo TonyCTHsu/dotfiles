@@ -9,19 +9,9 @@ This repo stores dotfiles and is the chezmoi source directory. The tool `chezmoi
 ## Commands
 
 ```sh
-# First-time install, treating this checkout as the source dir
-brew install chezmoi   # macOS; Omarchy installs it via install-omarchy.sh
-chezmoi init --apply --source=$HOME/dotfiles
-
-# Apply changes after editing the source dir
-chezmoi apply
-
-# Install/update packages
-brew bundle
-vim -u ~/.vimrc.bundles +PlugUpdate +PlugClean! +qa
+chezmoi apply      # run after every edit to the source dir
+brew bundle        # install packages after changing Brewfile
 ```
-
-`install.sh` picks the installer for the platform: `install-darwin.sh` on macOS, `install-omarchy.sh` on Linux.
 
 ## Design principles
 
