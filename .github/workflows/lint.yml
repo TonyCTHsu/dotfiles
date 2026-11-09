@@ -9,11 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: TonyCTHsu/simple-english@v0.13.0
+      - uses: TonyCTHsu/simple-english@v0.13.1
         with:
           files: .
-          # Install path breaks without a concrete version: the action's
-          # github.action_ref fallback is empty in composite run steps and it
-          # passes "latest" to gem install --version, which is invalid.
-          # Remove once the action fixes version resolution.
-          version: 0.13.0
