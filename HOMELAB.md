@@ -144,3 +144,6 @@ backups benefit from a stable address.
 - Fresh SSD: install Omarchy, run `./install.sh`, then
   `sudo tailscale up --ssh`. The machine is back in the tailnet in
   about 20 minutes.
+- After any `tailscale logout` or account switch: the `--ssh` flag
+  resets. Re-run `sudo tailscale up --ssh`, or the identity door
+  stays shut and only the key door works.
