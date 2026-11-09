@@ -18,6 +18,7 @@ On a new machine, the installer pauses once at the 1Password step: open the app,
 
 - [MACOS.md](MACOS.md): manual macOS setup, SSH and commit signing, work machines.
 - [OMARCHY.md](OMARCHY.md): Omarchy (Arch Linux) setup, package commands.
+- [HOMELAB.md](HOMELAB.md): homelab network setup over Tailscale.
 
 ## What I use
 

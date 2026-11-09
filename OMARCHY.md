@@ -51,21 +51,12 @@ The installer enables the `tailscaled` daemon and turns on the firewall
 Finish the one-time login:
 
 ```bash
-sudo tailscale up
+sudo tailscale up --ssh
 ```
 
-Then on the Mac:
-
-1. Install Tailscale (`brew install --cask tailscale-app`) and sign in
-   with the same account.
-2. Find the machine's MagicDNS name (`tailscale status` on either
-   machine).
-3. Put that name in the `Host omarchy` block in
-   `private_dot_ssh/private_config`, then `chezmoi apply` on the Mac.
-4. Test with `ssh omarchy`.
-
-Set a DHCP reservation for the ThinkCentre in the router so the LAN
-address stays stable for backup traffic.
+The `--ssh` flag enables Tailscale's identity-based SSH as a bootstrap
+and rescue path. The full setup lives in [HOMELAB.md](HOMELAB.md).
+It covers the Mac side, the 1Password key, and the tailnet ACL.
 
 ## Notes
 
