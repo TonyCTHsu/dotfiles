@@ -11,6 +11,7 @@ alias path='echo $PATH | tr -s ":" "\n"'
 alias dc="docker compose"
 alias pc="podman-compose"
 alias cm="chezmoi"
+alias ts="tailscale"
 command -v omarchy >/dev/null && alias om="omarchy"
 
 alias k="kubectl"
