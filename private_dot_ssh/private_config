@@ -7,8 +7,8 @@ Host github.com
   HostName github.com
   User git
 
-Host thinkcentre
-  # Tailscale MagicDNS name; set to the box's name after `sudo tailscale up`.
-  # Adjust User if the Omarchy username differs.
-  HostName thinkcentre
+Host omarchy
+  # MagicDNS name survives tailnet re-IPs. Adjust User if the Omarchy
+  # username differs.
+  HostName omarchy.tailca13b9.ts.net
   User tony
