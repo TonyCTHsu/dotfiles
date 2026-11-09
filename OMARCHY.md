@@ -44,6 +44,29 @@ pacman -Ss foo        # search repos
 paru -Ss foo          # search repos and AUR
 ```
 
+## Tailscale
+
+The installer enables the `tailscaled` daemon and turns on the firewall
+(ufw) with inbound traffic allowed only on the tailnet and LAN SSH.
+Finish the one-time login:
+
+```bash
+sudo tailscale up
+```
+
+Then on the Mac:
+
+1. Install Tailscale (`brew install --cask tailscale-app`) and sign in
+   with the same account.
+2. Find the ThinkCentre's MagicDNS name (`tailscale status` on either
+   machine).
+3. Put that name in the `Host thinkcentre` block in
+   `private_dot_ssh/private_config`, then `chezmoi apply` on the Mac.
+4. Test with `ssh thinkcentre`.
+
+Set a DHCP reservation for the ThinkCentre in the router so the LAN
+address stays stable for backup traffic.
+
 ## Notes
 
 - The first shell after boot asks for the signing key passphrase once.

@@ -6,3 +6,9 @@ Include ~/.colima/ssh_config
 Host github.com
   HostName github.com
   User git
+
+Host thinkcentre
+  # Tailscale MagicDNS name; set to the box's name after `sudo tailscale up`.
+  # Adjust User if the Omarchy username differs.
+  HostName thinkcentre
+  User tony
