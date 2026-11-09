@@ -19,4 +19,5 @@ load-personal-signing-key.sh
 install-arch-packages.sh
 setup-tailscale.sh
 harden-ssh-ufw.sh
+install-authorized-key.sh
 {{ end }}
