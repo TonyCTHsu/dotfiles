@@ -9,5 +9,5 @@ Host github.com
 
 Host omarchy
   # MagicDNS name survives tailnet re-IPs.
-  HostName omarchy.tailca13b9.ts.net
+  HostName omarchy.tail956aec.ts.net
   User tonycthsu

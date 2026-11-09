@@ -111,7 +111,7 @@ backups benefit from a stable address.
 3. From the Mac, connect and verify:
 
    ```bash
-   ssh user@machine-name.tailca13b9.ts.net 'hostname'
+   ssh user@machine-name.tail956aec.ts.net 'hostname'
    ```
 
    To make `ssh machine-name` work like `ssh omarchy`, add a Host block
