@@ -7,6 +7,7 @@ brew "chezmoi"
 brew "lima"
 brew "colima", restart_service: :changed
 brew "crane"
+brew "cryptography"
 brew "direnv"
 brew "dive"
 brew "docker"
