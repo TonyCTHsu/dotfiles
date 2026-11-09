@@ -17,4 +17,6 @@ Brewfile
 load-personal-signing-key.sh
 {{ else if eq .chezmoi.os "darwin" }}
 install-arch-packages.sh
+setup-tailscale.sh
+harden-ssh-ufw.sh
 {{ end }}
