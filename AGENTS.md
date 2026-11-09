@@ -1,10 +1,10 @@
 # AGENTS.md
 
-This file provides guidance to AI coding agents (Claude Code, Codex, Amp, pi) when working with code in this repository.
+This file gives guidance to AI coding agents (Claude Code, Codex, Amp, pi) that work in this repository.
 
 ## Overview
 
-A thoughtbot-style dotfiles repository, managed with `chezmoi` and applied to both macOS and Omarchy (Arch Linux). Configuration files only: there is no application code and nothing to build, test, or lint.
+This repo stores dotfiles and is the chezmoi source directory. The tool `chezmoi` copies the files into `$HOME`. It works on macOS and on Omarchy (Arch Linux). The repo holds configuration only. There is no app code, so there is nothing to build, test, or lint.
 
 ## Commands
 
@@ -21,38 +21,38 @@ brew bundle
 vim -u ~/.vimrc.bundles +PlugUpdate +PlugClean! +qa
 ```
 
-`install.sh` at the repo root dispatches by platform: `install-darwin.sh` on macOS, `install-omarchy.sh` on Linux.
+`install.sh` picks the installer for the platform: `install-darwin.sh` on macOS, `install-omarchy.sh` on Linux.
 
-## Design Principles
+## Design principles
 
-### Idempotency First
-Every change must survive `chezmoi apply` run twice:
-- Guard tool init with `if command -v tool >/dev/null 2>&1; then`
-- Guard sourcing with `[ -f "$file" ] && source "$file"`
-- Avoid operations that fail on subsequent runs (for example, unconditional `eval`)
+### Running twice must be safe
+Running `chezmoi apply` a second time must not break anything:
+- Guard each tool init with `if command -v tool >/dev/null 2>&1; then`
+- Guard each source with `[ -f "$file" ] && source "$file"`
+- Do not add steps that fail on the second run. An unconditional `eval` is one example.
 
-### Security and Data Protection
-Never commit secrets: private keys, API credentials, internal URLs, proprietary values. Use 1Password (`op read ...`), the keychain, or environment variables. Public information (names, emails, SSH public keys) is safe to commit. Check diffs before committing.
+### No secrets in this repo
+Never commit private keys, API tokens, internal URLs, or company values. Store secrets in 1Password (`op read ...`), the keychain, or environment variables. Public data is fine: names, emails, SSH public keys. Check the diff before you commit.
 
-## Architecture
+## How the repo is laid out
 
-### chezmoi layout
-- Source dir (`~/dotfiles`) mirrors `$HOME` with attribute-prefixed names. Examples: `dot_foo` → `~/.foo`, `private_dot_ssh` → `~/.ssh` (0700/0600 perms), `symlink_dot_claude` → `~/.claude`, `executable_link-obsidian` → `~/bin/link-obsidian`.
-- `.chezmoiignore` keeps some files repo-only. Excluded: `*.md`, `LICENSE`, `install*.sh`, `Brewfile` on Linux, and the `claude` and `obsidian` dirs. Entries are target names. chezmoi strips `dot_`/`run_` prefixes when matching.
-- One-time or content-triggered setup lives in `run_once_*` / `run_onchange_*` scripts: vim-plug install, plugin updates, 1Password key loading, doctor checks. These replaced the old `hooks/post-up` script. They use `|| true` where failure is acceptable. See [MIGRATION.md](MIGRATION.md) for the rationale.
+### chezmoi
+- The source directory mirrors `$HOME`. chezmoi renames each file to say where it goes. Examples: `dot_foo` → `~/.foo`, `private_dot_ssh` → `~/.ssh` (0700/0600 perms), `symlink_dot_claude` → `~/.claude`, `executable_link-obsidian` → `~/bin/link-obsidian`.
+- `.chezmoiignore` lists what chezmoi never writes into `$HOME`: `*.md`, `LICENSE`, `install*.sh`, `Brewfile` on Linux, and the `claude` and `obsidian` dirs. The entries are target names. chezmoi strips the `dot_` and `run_` prefixes before it matches.
+- Setup scripts run during `chezmoi apply`. A `run_once_*` script runs one time. A `run_onchange_*` script runs when a watched file changes. They cover vim-plug install, plugin updates, 1Password key loading, and doctor checks. They use `|| true` where a failure is fine. They replaced the old `hooks/post-up` script. See [MIGRATION.md](MIGRATION.md) for the reasons.
 
-### Local, untracked overrides
-- `~/.zshrc.local`: per-machine shell config, sourced by `dot_zshrc` under a `[[ -f ... ]]` guard. Never manage it with chezmoi.
-- `~/.config/datadog/git/config` and `~/.gitconfig.work-routing`: work git config, included by `dot_gitconfig`. Org names and work identity stay out of this repo. Personal identity is the default `[user]` block.
+### Files that stay on this machine
+- `~/.zshrc.local` holds machine-specific shell config. `dot_zshrc` sources it if it exists. Never manage it with chezmoi.
+- `dot_gitconfig` includes two untracked files: `~/.config/datadog/git/config` and `~/.gitconfig.work-routing`. They hold the work identity and org names. The repo itself keeps only the personal identity in `[user]`.
 
-### Agent configurations
-- `claude/` holds Claude Code's live state and settings, reached only through the `~/.claude` symlink (not applied by name).
-- `dot_pi/` holds pi agent config (`dot_pi/agent/AGENTS.md` becomes `~/.pi/agent/AGENTS.md`).
+### Agent settings
+- `claude/` holds Claude Code's live settings and state. Reach it through the `~/.claude` symlink. chezmoi does not apply it by name.
+- `dot_pi/` holds pi settings. For example, `dot_pi/agent/AGENTS.md` becomes `~/.pi/agent/AGENTS.md`.
 
 ### VS Code
-Use VS Code's built-in Settings Sync (Cmd+Shift+P → "Settings Sync: Turn On", sign in with GitHub). Do not manage VS Code settings, keybindings, or extensions in this repository.
+VS Code syncs its own settings. Turn on Settings Sync (`Cmd+Shift+P` → "Settings Sync: Turn On") and sign in with GitHub. Do not put VS Code settings, keybindings, or extensions in this repo.
 
 ## Further reading
-- [MIGRATION.md](MIGRATION.md): rationale for the chezmoi structure, `private_` placement, and script conventions.
-- [SETUP.md](SETUP.md): migrating a machine from the old `rcm` setup.
-- [OMARCHY.md](OMARCHY.md): Linux/Omarchy setup.
+- [MIGRATION.md](MIGRATION.md): why the chezmoi structure looks like it does, where `private_` goes, and what the scripts do.
+- [SETUP.md](SETUP.md): how to move a machine off the old `rcm` setup.
+- [OMARCHY.md](OMARCHY.md): Linux and Omarchy setup.
