@@ -8,7 +8,6 @@ Host github.com
   User git
 
 Host omarchy
-  # MagicDNS name survives tailnet re-IPs. Adjust User if the Omarchy
-  # username differs.
+  # MagicDNS name survives tailnet re-IPs.
   HostName omarchy.tailca13b9.ts.net
-  User tony
+  User tonycthsu
