@@ -10,7 +10,13 @@ Same one-liner on both platforms. `install.sh` picks the installer per OS:
 git clone https://github.com/TonyCTHsu/dotfiles ~/dotfiles && ~/dotfiles/install.sh
 ```
 
-On a new Mac, that is all. On a new Omarchy (Arch Linux) machine, the first run stops at the 1Password check. Follow [OMARCHY.md](OMARCHY.md) for the two extra steps.
+On a new machine, the first run stops at the 1Password check. Open the 1Password app, sign in, and enable:
+
+- Security > "Unlock using system authentication"
+- Developer > "Integrate with 1Password CLI"
+- General > "Keep 1Password in the system tray"
+
+Then run `~/dotfiles/install.sh` again. The second run imports the signing key and applies everything. [MACOS.md](MACOS.md) and [OMARCHY.md](OMARCHY.md) hold the full guides.
 
 ## Setup guides
 
